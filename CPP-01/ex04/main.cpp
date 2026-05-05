@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 16:25:11 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/05 16:51:28 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/05 18:59:02 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int   main(int argc, char **argv)
 
 	if (argc != 4)
 	{
-		std::cout << "Wrong number of args.\nFormat should be: ./sed <filename> <string1> <string2>" << std::endl;
+		std::cout << "Wrong number of args.\n";
+		std::cout << "Format should be: ./sed <filename> <string1> <string2>\n";
 		return (1);
 	}
 	file = argv[1];
@@ -38,31 +39,29 @@ int   main(int argc, char **argv)
 int	sed_string(std::string file, std::string s1, std::string s2)
 {
 	std::string		line;
-	std::ifstream	infile(file.c_str());
-	std::ofstream	outfile((file + ".replace").c_str());
 	size_t			i;
 	
-	if (!infile)
-		return (std::cout << "Error: Invalid iput file.\n", 1);
+	std::ifstream	infile(file.c_str());
+	if (infile.fail())
+		return (std::cout << "Error: Invalid \"" << file << "\" file.\n", 1);
+
+	std::ofstream	outfile((file + ".replace").c_str());
 	if (!outfile.is_open())
 		return (std::cout << "Error: Can't create output file.\n", 1);
 	
 	while (getline(infile, line))
 	{
-		i = line.find(s1);
-		while (i != std::string::npos)
-		{
-			if (s1.empty())
-			{
-				outfile << line << "\n";
-				break ;
-			}
-			line.erase(i, s1.length());
-			line.insert(i, s2);
-			i = line.find(s1, i + s2.length());
-		}
 		if (!s1.empty())
-		outfile << line << std::endl;
+		{
+			i = line.find(s1, 0);
+			while (i != std::string::npos)
+			{
+				line.erase(i, s1.length());
+				line.insert(i, s2);
+				i = line.find(s1, i + s2.length());
+			}
+		}
+		outfile << line << "\n";
 	}
 	infile.close();
 	outfile.close();
