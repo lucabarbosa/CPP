@@ -1,4 +1,4 @@
-NAME = megaphone
+NAME = zombies
 
 CXX      = c++
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98
