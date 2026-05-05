@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 00:44:28 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/05 01:05:05 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/05 15:47:36 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,14 @@ int   main(void)
 		jim.attack();
 		club.setType("some other type of club");
 		jim.attack();
+	}
+	std::cout << "-----" << std::endl;
+	{
+		HumanB karen("Karen");
+		karen.attack();
+		Weapon sword = Weapon("katana");
+		karen.setWeapon(sword);
+		karen.attack();
 	}
 	return (0);
 }

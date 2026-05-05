@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 00:48:04 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/05 13:26:38 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/05 15:49:32 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	HumanB::setWeapon(Weapon &weapon)
 void  HumanB::attack()
  {
 	if (!weapon)
-		std::cout << name << " attacks with their " << "no weapon" << std::endl;
+		std::cout << name << " attacks " << "unarmed" << std::endl;
 	else
 		std::cout << name << " attacks with their " << weapon->getType() << std::endl;
 }
