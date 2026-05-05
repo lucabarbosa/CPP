@@ -1,4 +1,4 @@
-NAME = megaphone
+NAME = sed
 
 CXX      = c++
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98
@@ -6,6 +6,7 @@ CXXFLAGS = -Wall -Werror -Wextra -std=c++98
 GREEN  = \033[0;32m
 RED    = \033[0;31m
 BLUE = \033[0;36m
+YELLOW = \033[0;33m
 RESET  = \033[0m
 
 SRC      := $(shell find . -type f -name "*.cpp")
@@ -22,7 +23,7 @@ $(OBJS_DIR):
 
 $(NAME): $(OBJS)
 	@$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
-	@printf "$(GREEN)🚀 Binary $@ created!$(RESET)\n"
+	@printf "$(GREEN)🚀 Binary $(YELLOW)$@$(GREEN) created!$(RESET)\n"
 
 clean:
 	@rm -rf $(OBJS) $(OBJS_DIR)
