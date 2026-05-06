@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/05 00:44:28 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/05 15:47:36 by lbento           ###   ########.fr       */
+/*   Created: 2026/04/24 00:44:28 by lbento            #+#    #+#             */
+/*   Updated: 2026/05/06 18:47:35 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,12 @@ int   main(void)
 		Weapon sword = Weapon("katana");
 		karen.setWeapon(sword);
 		karen.attack();
+	}
+	{
+		Weapon sword = Weapon("big knife");
+
+		HumanA bob("Jackie", sword);
+		bob.attack();
 	}
 	return (0);
 }

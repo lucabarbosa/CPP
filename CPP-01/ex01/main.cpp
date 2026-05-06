@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/04 09:40:09 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/05 00:22:14 by lbento           ###   ########.fr       */
+/*   Created: 2026/04/24 09:40:09 by lbento            #+#    #+#             */
+/*   Updated: 2026/05/06 18:56:15 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 
 int   main(void)
 {
-	std::cout << "Creating and deleting horde with 10 zombies:" << std::endl;
+	std::cout << "Creating and deleting zombie horde:" << std::endl;
 	Zombie *horde = zombieHorde(10, "Zoombies horde");
+	if (!horde)
+		return (1);
 	for(int i = 0; i < 10; i++)
 		horde[i].announce();
 	delete []horde;

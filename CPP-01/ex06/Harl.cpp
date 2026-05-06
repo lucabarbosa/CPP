@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 19:03:47 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/05 21:54:29 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/06 18:50:34 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,16 @@ void  Harl::complain(std::string level)
 			{
 				case 0:
 					debug();
+					// falls through
 				case 1:
 					info();
+					// falls through
 				case 2:
 					warning();
+					// falls through
 				case 3:
 					error();
+					// falls through
 				default:
 					break;
 			}

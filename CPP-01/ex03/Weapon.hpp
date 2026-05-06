@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/05 00:45:06 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/05 12:51:14 by lbento           ###   ########.fr       */
+/*   Created: 2026/04/24 00:45:06 by lbento            #+#    #+#             */
+/*   Updated: 2026/05/06 18:30:46 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define WEAPON_HPP
 
 #include <iostream>
-#include <string.h>
+#include <string>
 
 class Weapon
 {
