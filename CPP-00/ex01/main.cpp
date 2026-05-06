@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 22:06:49 by lbento            #+#    #+#             */
-/*   Updated: 2026/04/29 17:07:09 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/06 18:10:28 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ int   main (void)
 		std::getline(std::cin, cmd);
 		if (std::cin.eof())
 		{
-			std::cout << "\033[0;32mEOF detected. Returning to main menu.\n\033[0m";
+			std::cout << "\n\033[0;31mEOF detected. Returning to main menu.\n\033[0m";
 			std::cin.clear();
+			return (0);
 		}
 		else if (cmd == "ADD")
 			phonebook.add_contact();

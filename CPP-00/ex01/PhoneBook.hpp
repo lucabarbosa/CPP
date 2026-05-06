@@ -6,13 +6,14 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 22:06:34 by lbento            #+#    #+#             */
-/*   Updated: 2026/04/29 16:16:02 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/06 18:06:58 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef  PHONEBOOK_HPP
 #define  PHONEBOOK_HPP
 
+#include <cstdlib>
 #include "Contact.hpp"
 
 class PhoneBook

@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 22:06:16 by lbento            #+#    #+#             */
-/*   Updated: 2026/04/29 16:52:03 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/06 18:07:16 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ void PhoneBook::add_contact()
 
 static void print_error()
 {
-			std::cout << "\033[0;31mEOF detected. Returning to main menu.\n\033[0m";
-			std::cin.clear();
-	return ;
+	std::cout << "\n\033[0;31mEOF detected. Returning to main menu.\n\033[0m";
+	std::cin.clear();
+	std::exit(0);
 }
 
 static bool verify_digits(std::string str)
