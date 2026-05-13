@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 13:02:34 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/13 13:51:55 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/13 14:29:52 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 
 class ScavTrap : public ClapTrap
 {
-	private:
-		/* data */
 	public:
 		ScavTrap();
 		ScavTrap(std::string name);
