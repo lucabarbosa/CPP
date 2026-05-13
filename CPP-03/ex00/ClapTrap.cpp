@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 19:22:29 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/13 12:59:04 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/13 14:08:48 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ ClapTrap::ClapTrap(std::string name) : _name(name), _hit_points(10), _energy_poi
 
 ClapTrap::ClapTrap(const ClapTrap &other)
 {
+	std::cout << "\033[0;33mClapTrap copy constructor called\033[0m" << std::endl;
 	*this = other;
 }
 
@@ -67,7 +68,7 @@ void	ClapTrap::attack(const std::string &target)
 
 void	ClapTrap::takeDamage(unsigned int amount)
 {
-	if (amount >= _hit_points)
+	if (amount > _hit_points)
 		_hit_points = 0;
 	if (_hit_points == 0)
 	{
@@ -106,12 +107,12 @@ void	ClapTrap::printStatus(void)
 		return ;
 	}
 	std::cout << "\033[1;35m";
-	std::cout << "╔══════════════════════╗\n";
-	std::cout << "║    CHARACTER INFO    ║\n";
-	std::cout << "╚══════════════════════╝\n";
-	std::cout << "  Name          : " << this->_name << std::endl;
-	std::cout << "  Hit Points    : " << this->_hit_points << std::endl;
-	std::cout << "  Energy Points : " << this->_energy_points << std::endl;
-	std::cout << "  Attack Damage : " << this->_attack_damage << std::endl;
-	std::cout << "═══════════════════════\033[0m" << std::endl;
+	std::cout << "╔═══════════════════════╗\n";
+	std::cout << "║     CLAPTRAP INFO     ║\n";
+	std::cout << "╚═══════════════════════╝\n";
+	std::cout << "   Name          : " << this->_name << std::endl;
+	std::cout << "   Hit Points    : " << this->_hit_points << std::endl;
+	std::cout << "   Energy Points : " << this->_energy_points << std::endl;
+	std::cout << "   Attack Damage : " << this->_attack_damage << std::endl;
+	std::cout << "════════════════════════\033[0m" << std::endl;
 }
