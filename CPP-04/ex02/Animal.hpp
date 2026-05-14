@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 09:30:01 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/14 09:42:31 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/14 17:20:52 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ class Animal
 		Animal &operator=(const Animal &other);
 		virtual ~Animal();
 		
-		virtual void	makeSound() const;
+		virtual void	makeSound() const = 0;
 		
 		std::string	getType() const;
 		void	setType(const std::string &type);

@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 09:30:10 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/14 11:23:42 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/14 17:21:42 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,4 @@ std::string	Animal::getType() const
 void	Animal::setType(const std::string &type)
 {
 	this->type = type;
-}
-
-void	Animal::makeSound() const
-{
-	std::cout << "\033[0;34mEXOTIC SOUND!\033[0m" << std::endl;
 }
