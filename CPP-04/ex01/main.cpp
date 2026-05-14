@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 09:31:41 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/14 16:27:30 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/14 17:13:43 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,49 +18,51 @@
 int   main(void)
 {
 	{
-		std::cout << "\033[0;32m------------------" << std::endl;
+		std::cout << "\033[0;32m---------------------------------" << std::endl;
 		std::cout << "Testing with array and destructor" << std::endl;
-		std::cout << "\033[0;32m------------------\033[0m" << std::endl;
+		std::cout << "---------------------------------\033[0m" << std::endl;
 
-		int	num = 6;
+		const int	num = 6;
 		Animal *animals[num];
 
-		for (int i = 0; i < num/2; i++)
+		for (int i = 0; i < num / 2; i++)
 			animals[i] = new Cat();
-		
-		for (int i = 0; i < num/2; i++)
+
+		for (int i = num / 2; i < num; i++)
 			animals[i] = new Dog();
-		
+ 
 		for (int i = 0; i < num; i++)
 			animals[i]->makeSound();
-
+ 
 		for (int i = 0; i < num; i++)
 			delete animals[i];
 	}
 	{
-		std::cout << "\033[0;32m------------------" << std::endl;
+		std::cout << "\033[0;32m---------------" << std::endl;
 		std::cout << "Deep copy tests" << std::endl;
-		std::cout << "\033[0;32m------------------\033[0m" << std::endl;
-
+		std::cout << "---------------\033[0m" << std::endl;
+ 
+		Brain smart;
+		smart.setIdea(0, "Catch the ball");
+ 
 		Dog pluto;
-		pluto.getBrain();
-		Dog pluto2(pluto);
+		pluto.setBrain(smart);
+		Dog scooby(pluto);
+ 
+		std::cout << "\033[0;32mPluto brain addr: \033[0m" << &pluto.getBrain() << "\033[0;32m || Scooby brain: \033[0m"  << &scooby.getBrain() << std::endl;
+		std::cout << "\033[0;34mPluto idea[0]: \033[0m"  << pluto.getBrain().getIdea(0)  << std::endl;
+		std::cout << "\033[0;34mScooby idea[0]: \033[0m" << scooby.getBrain().getIdea(0) << std::endl;
 
-		std::cout << "d1 brain: " << &pluto.getBrain() << " | d2 brain: " << &d2.getBrain() << " (must differ)" << std::endl;
+		Brain lazy;
+		lazy.setIdea(0, "I want catnip");
 
-		d2.getBrain().setIdea(0, "I like cats");
-		std::cout << "d1 idea[0]: " << d1.getBrain().getIdea(0)
-		          << " <-- unchanged" << std::endl;
-		std::cout << "d2 idea[0]: " << d2.getBrain().getIdea(0) << std::endl;
+		Cat tom;
+		tom.setBrain(lazy);
+		Cat felix(tom);
 
-		Cat c1;
-		c1.getBrain().setIdea(0, "I like fish");
-		Cat c2 = c1;
-
-		c2.getBrain().setIdea(0, "I like birds");
-		std::cout << "c1 idea[0]: " << c1.getBrain().getIdea(0)
-		          << " <-- unchanged" << std::endl;
-		std::cout << "c2 idea[0]: " << c2.getBrain().getIdea(0) << std::endl;
+		std::cout << "\033[0;32mTom brain addr: \033[0m" << &tom.getBrain() << "\033[0;32m || Felix brain: \033[0m"  << &felix.getBrain() << std::endl;
+		std::cout << "\033[0;34mTom idea[0]: \033[0m"   << tom.getBrain().getIdea(0)   << std::endl;
+		std::cout << "\033[0;34mFelix idea[0]: \033[0m" << felix.getBrain().getIdea(0) << std::endl;
 	}
 	return (0);
 }

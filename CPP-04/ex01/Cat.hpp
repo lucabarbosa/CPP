@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 09:30:51 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/14 15:31:01 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/14 16:59:18 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ class Cat : public Animal
 		
 		void makeSound(void) const;
 		
-		void	setBrain(Brain &brain);
-		const std::string	*getBrain(void);
+		void	setBrain(const Brain &brain);
+		Brain &getBrain(void);
 };
 
 #endif

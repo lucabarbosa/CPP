@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 12:20:09 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/14 15:32:42 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/14 16:33:33 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ Brain::Brain()
 Brain::Brain(std::string idea)
 {
 	std::cout << "Brain\033[0;33m default constructor for \033[0m" << idea << "\033[0;33m called.\033[0m" << std::endl;
-	for (unsigned int i; i < 100; i++)
+	for (unsigned int i = 0; i < 100; i++)
 		this->ideas[i] = idea;
 }
 

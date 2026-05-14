@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 09:31:18 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/14 15:33:11 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/14 16:54:44 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ class Dog : public Animal
 		
 		void makeSound() const;
 		
-		void	setBrain(Brain &brain);
-		const std::string	*getBrain(void);
+		void	setBrain(const Brain &brain);
+		Brain &getBrain(void);
 };
 
 #endif
