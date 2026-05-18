@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucabento <lucabento@student.42.fr>        +#+  +:+       +#+        */
+/*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/16 10:40:25 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/18 01:21:47 by lucabento        ###   ########.fr       */
+/*   Updated: 2026/05/18 02:23:43 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat(void) : name(""), grade(150)
+Bureaucrat::Bureaucrat(void) : name("Default"), grade(150)
 {
 	std::cout << "Bureaucrat\033[0;33m has been created.\033[0m" << std::endl;
 }
