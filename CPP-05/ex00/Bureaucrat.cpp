@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lucabento <lucabento@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/16 10:40:25 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/16 12:14:53 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/18 01:21:47 by lucabento        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ Bureaucrat::Bureaucrat(const std::string name, int grade) : name(name)
 	else if (grade > lowest_grade)
 		throw	Bureaucrat::GradeTooLowException();
 	this->grade = grade;
-	std::cout << name << "\033[0;33m with grade" << grade << " has been created.\033[0m" << std::endl;
+	std::cout << name << "\033[0;33m with grade \033[0m" << grade << "\033[0;33m has been created.\033[0m" << std::endl;
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat &other) : name(other.getName()), grade(other.getGrade())
@@ -71,16 +71,16 @@ void	Bureaucrat::decrementGrade(void)
 
 const char	*Bureaucrat::GradeTooHighException::what() const throw()
 {
-	return ("Grade is Too High! 👍");
+	return ("\033[1;31mGrade is Too High! ⬆\033[0m");
 }
 
-const char	*Bureaucrat::GradeTooHighException::what() const throw()
+const char	*Bureaucrat::GradeTooLowException::what() const throw()
 {
-	return ("Grade is Too Low! 👎");
+	return ("\033[1;31mGrade is Too Low! ⬇\033[0m");
 }
 
-std::ostream &operator<<(std::ostream &out, Bureaucrat &obj)
+std::ostream &operator<<(std::ostream &out, const Bureaucrat &obj)
 {
-	out << obj.getName() << ", bureaucrat grade " << obj.getGrade() << ".";
+	out << obj.getName() << "\033[0;33m, bureaucrat grade \033[0m" << obj.getGrade() << "\033[0;33m.\033[0m";
 	return out;
 }
