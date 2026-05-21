@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 09:23:44 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/21 10:39:25 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/21 13:44:35 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 RobotomyRequestForm::RobotomyRequestForm() 
 	: AForm("Robotomy Request Form", 72, 45), target("Undefined target")
 {
-	std::cout << "Robotomy constructor has been created." << std::endl;
+	std::cout << this->getName() << "\033[0;33m constructor has been created.\033[0;m" << std::endl;
 }
 
 RobotomyRequestForm::RobotomyRequestForm(std::string target)
@@ -28,7 +28,7 @@ RobotomyRequestForm::RobotomyRequestForm(std::string target)
 RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &other)
 	: AForm(other), target(other.target)
 {
-	std::cout << "Robotomy constructor has been copied." << std::endl;
+	std::cout << "\033[0;33mRobotomy constructor has been copied.\033[0;m" << std::endl;
 }
 
 RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm &other)
@@ -43,7 +43,7 @@ RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm &o
 
 RobotomyRequestForm::~RobotomyRequestForm()
 {
-	std::cout << "Robotomy constructor has been destroyed." << std::endl;
+	std::cout << this->getName() << "\033[0;33m has been destroyed.\033[0;m" << std::endl;
 }
 
 void	RobotomyRequestForm::execute(Bureaucrat const &executor) const
@@ -52,9 +52,9 @@ void	RobotomyRequestForm::execute(Bureaucrat const &executor) const
 		throw NotSignedException();
 	else if (executor.getGrade() > getGradeToExec())
 		throw GradeTooLowException();
-   std::cout << "Bzzzt bzzzzzzt bzzzt" << std::endl;
+   std::cout << "\033[0;35mBzzzt bzzzzzzt bzzzt\033[0;m" << std::endl;
    if (rand() % 2)
-		std::cout << target << " has been robotomized. 🤖" << std::endl;
+		std::cout << target << "\033[0;35m has been robotomized.\033[0;m 🤖" << std::endl;
 	else
-		std::cout << target << " failed to be robotomized." << std::endl;
+		std::cout << target << "\033[0;31m couldn't be robotomized.\033[0;m" << std::endl;
 }

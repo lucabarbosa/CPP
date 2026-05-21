@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/16 10:40:25 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/21 10:46:07 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/21 11:45:55 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void	Bureaucrat::signForm(AForm &form)
 	}
 	catch(const std::exception &e)
 	{
-		std::cout << name << "\033[0;34m can't sign \033[0m" << form.getName()
-			<< "\033[0;34m because the \033[0m" << e.what() << std::endl;
+		std::cout << name << "\033[0;31m can't sign \033[0m" << form.getName()
+			<< "\033[0;31m because the \033[0m" << e.what() << std::endl;
 	}	
 }
 
@@ -88,12 +88,12 @@ void Bureaucrat::executeForm(const AForm &form) const
 	try
 	{
 		form.execute(*this);
-		std::cout << this->getName() << " executed " << form.getName() << std::endl;
+		std::cout << this->getName() << "\033[0;33m executed \033[0;m" << form.getName() << std::endl;
 	}
 	catch(const std::exception &e)
 	{
-		std::cout << this->getName() << "can't execute " << form.getName()
-			<< " because " << e.what() << std::endl;
+		std::cout << this->getName() << "\033[0;31m can't execute \033[0;m" << form.getName()
+			<< "\033[0;31m because \033[0;m" << e.what() << std::endl;
 	}
 	
 }

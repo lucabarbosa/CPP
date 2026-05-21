@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 21:26:53 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/21 10:38:12 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/21 11:17:27 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 PresidentialPardonForm::PresidentialPardonForm() 
 	: AForm("Presidential Pardon Form", 25, 5), target("Undefined target")
 {
-	std::cout << "Presidential constructor has been created." << std::endl;
+	std::cout << "\033[0;33mPresidential constructor has been created.\033[0;m" << std::endl;
 }
 
 PresidentialPardonForm::PresidentialPardonForm(std::string target)
@@ -28,7 +28,7 @@ PresidentialPardonForm::PresidentialPardonForm(std::string target)
 PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &other)
 	: AForm(other), target(other.target)
 {
-	std::cout << "Presidential constructor has been copied." << std::endl;
+	std::cout << "\033[0;33mPresidential constructor has been copied.\033[0;m" << std::endl;
 }
 
 PresidentialPardonForm &PresidentialPardonForm::operator=(const PresidentialPardonForm &other)
@@ -43,7 +43,7 @@ PresidentialPardonForm &PresidentialPardonForm::operator=(const PresidentialPard
 
 PresidentialPardonForm::~PresidentialPardonForm()
 {
-	std::cout << "Presidential constructor has been destroyed." << std::endl;
+	std::cout << this->getName() << "\033[0;33m has been destroyed.\033[0;m" << std::endl;
 }
 
 void	PresidentialPardonForm::execute(Bureaucrat const &executor) const
@@ -52,5 +52,5 @@ void	PresidentialPardonForm::execute(Bureaucrat const &executor) const
 		throw NotSignedException();
 	else if (executor.getGrade() > getGradeToExec())
 		throw GradeTooLowException();
-	std::cout << target << " has been pardoned by Zaphod Beeblebrox." << std::endl;
+	std::cout << target << "\033[0;36m has been pardoned by Zaphod Beeblebrox.\033[0;m" << std::endl;
 }
