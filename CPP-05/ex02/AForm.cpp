@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/16 01:41:34 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/21 19:00:14 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/21 20:40:46 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ AForm::AForm(const AForm &other)
 		throw	AForm::GradeTooHighException();
 	else if (gradeToSign > lowest_grade || gradeToExec > lowest_grade)
 		throw	AForm::GradeTooLowException();
-	*this = other;
 	std::cout << other.getName() << "\033[0;33m has been copied.\033[0m" << std::endl;
 }
 

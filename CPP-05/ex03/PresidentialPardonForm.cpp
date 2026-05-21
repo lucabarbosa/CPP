@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 21:26:53 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/21 18:16:22 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/21 20:30:54 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 PresidentialPardonForm::PresidentialPardonForm() 
 	: AForm("Presidential Pardon Form", 25, 5), target("Undefined target")
 {
-	std::cout << "\033[0;33mPresidential constructor has been created.\033[0;m" << std::endl;
+
 }
 
 PresidentialPardonForm::PresidentialPardonForm(std::string target)
@@ -28,7 +28,7 @@ PresidentialPardonForm::PresidentialPardonForm(std::string target)
 PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &other)
 	: AForm(other), target(other.target)
 {
-	std::cout << "\033[0;33mPresidential constructor has been copied.\033[0;m" << std::endl;
+
 }
 
 PresidentialPardonForm &PresidentialPardonForm::operator=(const PresidentialPardonForm &other)

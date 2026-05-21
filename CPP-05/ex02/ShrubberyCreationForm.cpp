@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 21:24:56 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/21 20:03:34 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/21 20:32:46 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ShrubberyCreationForm::ShrubberyCreationForm() 
 	: AForm("Shrubbery Creation Form", 145, 137), target("Undefined target")
 {
-	std::cout << this->getName() <<"\033[0;33m constructor has been created.\033[0;m" << std::endl;
+
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(std::string target)
@@ -28,7 +28,7 @@ ShrubberyCreationForm::ShrubberyCreationForm(std::string target)
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &other)
 	: AForm(other), target(other.target)
 {
-	std::cout << "\033[0;33mShruberry constructor has been copied.\033[0;m" << std::endl;
+
 }
 
 ShrubberyCreationForm &ShrubberyCreationForm::operator=(const ShrubberyCreationForm &other)

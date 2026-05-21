@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 09:23:44 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/21 13:44:35 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/21 20:31:13 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 RobotomyRequestForm::RobotomyRequestForm() 
 	: AForm("Robotomy Request Form", 72, 45), target("Undefined target")
 {
-	std::cout << this->getName() << "\033[0;33m constructor has been created.\033[0;m" << std::endl;
+
 }
 
 RobotomyRequestForm::RobotomyRequestForm(std::string target)
@@ -28,7 +28,7 @@ RobotomyRequestForm::RobotomyRequestForm(std::string target)
 RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &other)
 	: AForm(other), target(other.target)
 {
-	std::cout << "\033[0;33mRobotomy constructor has been copied.\033[0;m" << std::endl;
+
 }
 
 RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm &other)
