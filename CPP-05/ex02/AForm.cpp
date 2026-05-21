@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/16 01:41:34 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/21 10:20:40 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/21 19:00:14 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ AForm::AForm(const std::string &name, int gradeToSign, int gradeToExec)
 }
 
 AForm::AForm(const AForm &other)
-	: name(other.name), gradeToSign(other.gradeToSign), gradeToExec(other.gradeToExec)
+	: name(other.name), isSigned(other.isSigned), gradeToSign(other.gradeToSign), gradeToExec(other.gradeToExec)
 {
 	if (gradeToSign < highest_grade || gradeToExec < highest_grade)
 		throw	AForm::GradeTooHighException();
@@ -44,6 +44,8 @@ AForm::AForm(const AForm &other)
 AForm &AForm::operator=(const AForm &other)
 {
 	std::cout << other.getName() << "\033[0;33m has been assigned from another form.\033[0m" << std::endl;
+	if (this != &other)
+        this->isSigned = other.isSigned;
 	return (*this);
 }
 

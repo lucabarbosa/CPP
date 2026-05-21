@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 21:24:56 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/21 11:21:44 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/21 19:01:35 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ ShrubberyCreationForm::~ShrubberyCreationForm()
 void	ShrubberyCreationForm::execute(Bureaucrat const &executor) const
 {
 	std::string	filename = target + "_shrubbery";
-	std::ofstream	outfile(filename.c_str());
 
 	if (getIsSigned() == false)
 		throw NotSignedException();
 	else if (executor.getGrade() > getGradeToExec())
 		throw GradeTooLowException();
+	std::ofstream	outfile(filename.c_str());
 	if (outfile.is_open())
 	{
 		for (int i = 0; i < 3; i++)
