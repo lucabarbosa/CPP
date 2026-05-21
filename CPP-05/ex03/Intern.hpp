@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 13:57:04 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/21 14:35:24 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/21 20:08:54 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ class AForm;
 
 class Intern
 {
+	private:
+		AForm	*makeShrubberyCreationForm(std::string target);
+		AForm	*makeRobotomyRequestForm(std::string target);
+		AForm	*makePresidentialPardonForm(std::string target);
 	public:
 		Intern();
 		Intern(const Intern &other);
@@ -28,9 +32,6 @@ class Intern
 		~Intern();
 		
 		AForm	*makeForm(std::string name, std::string target);
-		AForm	*makeShrubberyCreationForm(std::string target);
-		AForm	*makeRobotomyRequestForm(std::string target);
-		AForm	*makePresidentialPardonForm(std::string target);
 };
 
 	#endif
