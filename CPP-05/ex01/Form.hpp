@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/16 01:39:54 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/18 02:13:30 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/20 19:51:22 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@ class Form
 {
 	private:
 		const std::string	name;
+		bool					isSigned;
 		static const int	highest_grade = 1;
 		static const int	lowest_grade = 150;
 		const int			gradeToSign;
 		const int			gradeToExec;
-		bool					isSigned;
+
 	public:
 		Form(void);
 		Form(const std::string &name, int gradeToSign, int gradeToExec);

@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/16 01:41:34 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/18 02:22:50 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/20 20:40:59 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 Form::Form(void) : name("Default"), gradeToSign(42), gradeToExec(42)
 {
 	this->isSigned = false;
-	std::cout << "Form\033[0;33m has been created.\033[0m" << std::endl;
+	std::cout << name << "\033[0;33m has been created.\033[0m" << std::endl;
 }
 
 Form::Form(const std::string &name, int gradeToSign, int gradeToExec)
@@ -27,10 +27,7 @@ Form::Form(const std::string &name, int gradeToSign, int gradeToExec)
 		throw	Form::GradeTooHighException();
 	else if (gradeToSign > lowest_grade || gradeToExec > lowest_grade)
 		throw	Form::GradeTooLowException();
-	
-	std::cout << name << "\033[0;33m with grade to sign: \033[0m" << gradeToSign
-	<< "\033[0;33m and grade to execute: \033[0m" << gradeToExec 
-	<< "\033[0;33m has been created.\033[0m" << std::endl;
+	std::cout << name << "\033[0;33m has been created.\033[0m" << std::endl;
 }
 
 Form::Form(const Form &other)
@@ -41,7 +38,7 @@ Form::Form(const Form &other)
 	else if (gradeToSign > lowest_grade || gradeToExec > lowest_grade)
 		throw	Form::GradeTooLowException();
 	*this = other;
-	std::cout << "Form\033[0;33m has been copied.\033[0m" << std::endl;
+	std::cout << other.getName() << "\033[0;33m has been copied.\033[0m" << std::endl;
 }
 
 Form &Form::operator=(const Form &other)
@@ -100,8 +97,12 @@ const char	*Form::AlreadySignedException::what() const throw()
 
 std::ostream &operator<<(std::ostream &out, const Form &obj)
 {
-	out << obj.getName() << "\033[0;33m form signed: \033[0m" << obj.getIsSigned()
-	<< "\033[0;33m. Grade to sign: \033[0m" << obj.getGradeToSign()
-	<< "\033[0;33m. Grade to execute: \033[0m"<< obj.getGradeToExec() << "\033[0;33m.\033[0m";
+	out << obj.getName() << "\033[0;33m form is \033[0m";
+	if (obj.getIsSigned())
+		out << "signed";
+	else
+		out << "unsigned";
+	out << "\033[0;33m. Grade to sign: \033[0m" << obj.getGradeToSign()
+		<< "\033[0;33m. Grade to execute: \033[0m"<< obj.getGradeToExec() << "\033[0;33m.\033[0m";
 	return out;
 }
