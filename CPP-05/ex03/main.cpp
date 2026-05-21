@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/16 10:39:54 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/21 15:15:06 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/21 18:21:38 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,65 @@
 #include "RobotomyRequestForm.hpp"
 #include "ShrubberyCreationForm.hpp"
 #include "Intern.hpp"
+#include <ctime>
 
 void	print_title(std::string title);
 
 int   main(void)
 {
+	std::srand(std::time(NULL));
 	{
-		print_title("Testing constructors from intern");
+		print_title("Testing intern for each form");
+		try
+		{
+			Bureaucrat boss("Boss", 1);
+			Intern intern;
+			AForm *form;
+			
+			
+			form = intern.makeForm("ShrubberyCreationForm", "Tree");
+			boss.signForm(*form);
+			boss.executeForm(*form);
+			delete form;
+			std::cout << "-----" << std::endl;
+			
+			form = intern.makeForm("RobotomyRequestForm", "Bender");
+			boss.signForm(*form);
+			boss.executeForm(*form);
+			delete form;
+			std::cout << "-----" << std::endl;
+			
+			form = intern.makeForm("PresidentialPardonForm", "Arthur");
+			boss.signForm(*form);
+			boss.executeForm(*form);
+			delete form;
+			std::cout << "-----" << std::endl;
+			
+			form = intern.makeForm("Non-existentForm", "target");
+			if (form)
+				delete form;
+		}
+		catch(const std::exception &e)
+		{
+			std::cout << "\033[0;31mGrade out of range expected: \033[0m" << e.what() << std::endl;
+		}
+	}
+//----------------
+	{
+		print_title("Testing intern with Bureaucrat stream");
 		try
 		{
 			Intern intern;
-			AForm *tree;
-			Bureaucrat putin("Putin", 1);
-			
-			putin.executeForm(*tree);
-			tree = intern.makeForm("ShrubberyCreationForm", "Home");
+			Bureaucrat boss("Boss", 1);
+			AForm *tree = intern.makeForm("ShrubberyCreationForm", "Tree");
+			if (tree)
+			{
+				boss.signForm(*tree);
+				boss.executeForm(*tree);
+				delete tree;
+			}
+			else
+				std::cout << "Allocation error.";
 		}
 		catch(const std::exception &e)	
 		{
@@ -38,21 +82,65 @@ int   main(void)
 		}
 	}
 //----------------
-	// {
-	// 	print_title("Testing constructors without signing");
-	// 	try
-	// 	{
-	// 		Bureaucrat putin("Putin", 1);
-	// 		ShrubberyCreationForm tree("tree");
-
-	// 		putin.executeForm(tree);
-	// 	}
-	// 	catch(const std::exception &e)
-	// 	{
-	// 		std::cout << "\033[0;31mGrade out of range expected: \033[0m" << e.what() << std::endl;
-	// 	}
-	// }
+	{
+		print_title("Testing Intern without signing");
+		try
+		{
+			Intern intern;
+			Bureaucrat boss("Boss", 1);
+			AForm *form = intern.makeForm("ShrubberyCreationForm", "Tree");
+			if (form)
+			{
+				boss.executeForm(*form);
+				delete form;
+			}
+		}
+		catch(const std::exception &e)
+		{
+			std::cout << "\033[0;31mGrade out of range expected: \033[0m" << e.what() << std::endl;
+		}
+	}
 //----------------
+	{
+		print_title("Testing Intern with low grade");
+		try
+		{
+			Intern intern;
+			Bureaucrat boss("Boss", 150);
+			AForm *form = intern.makeForm("PresidentialPardonForm", "Arthur");
+			if (form)
+			{
+				boss.signForm(*form);
+				boss.executeForm(*form);
+				delete form;
+			}
+		}
+		catch(const std::exception &e)
+		{
+			std::cout << "\033[0;31mGrade out of range expected: \033[0m" << e.what() << std::endl;
+		}
+	}
+//----------------
+	{
+		print_title("Testing Intern with low grade");
+		try
+		{
+			Intern intern;
+			Bureaucrat signer("Signer", 72);
+			Bureaucrat executor("Executor", 45);
+			AForm *form = intern.makeForm("RobotomyRequestForm", "Bender");
+			if (form)
+			{
+   			signer.signForm(*form);
+				executor.executeForm(*form);
+				delete form;
+			}
+		}
+		catch(const std::exception &e)
+		{
+			std::cout << "\033[0;31mGrade out of range expected: \033[0m" << e.what() << std::endl;
+		}
+	}
 	return (0);
 }
 

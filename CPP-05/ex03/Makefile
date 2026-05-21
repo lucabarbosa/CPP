@@ -31,7 +31,8 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
-	@printf "$(RED)💥 Binaries removed.$(RESET)\n"
+	@rm *_shrubbery
+	@printf "$(RED)💥 Binaries and outfiles removed.$(RESET)\n"
 
 re: fclean all
 
