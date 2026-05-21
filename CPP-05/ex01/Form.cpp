@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/16 01:41:34 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/20 20:40:59 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/21 10:19:41 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,9 @@ const char	*Form::GradeTooLowException::what() const throw()
 	return ("\033[1;31mGrade is Too Low! ⬇\033[0m");
 }
 
-const char	*Form::AlreadySignedException::what() const throw()
+const char	*Form::NotSignedException::what() const throw()
 {
-	return ("\033[1;31mForm is Already Signed!\033[0m");
+	return ("\033[1;31mForm is not signed!\033[0m");
 }
 
 std::ostream &operator<<(std::ostream &out, const Form &obj)

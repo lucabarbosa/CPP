@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/16 01:39:54 by lbento            #+#    #+#             */
-/*   Updated: 2026/05/20 19:51:22 by lbento           ###   ########.fr       */
+/*   Updated: 2026/05/21 10:19:59 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ class Form
 			public:
 				const char *what() const throw();
 		};
-		class AlreadySignedException : public std::exception
+		class NotSignedException : public std::exception
 		{
 			public:
 				const char *what() const throw();
