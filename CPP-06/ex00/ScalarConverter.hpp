@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/22 18:03:12 by lbento            #+#    #+#             */
-/*   Updated: 2026/06/10 23:28:30 by lbento           ###   ########.fr       */
+/*   Updated: 2026/06/11 09:33:11 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ class ScalarConverter
 		ScalarConverter(const ScalarConverter &other);
 		ScalarConverter &operator=(const ScalarConverter &other);
 		~ScalarConverter(void);
-		static void	convertChar(int value);
-		static void	convertInt(int value);
+		static void	convertChar(double value);
+		static void	convertInt(double value);
 		static void	convertFloat(double value);
 		static void	convertDouble(double value);
 	public:
