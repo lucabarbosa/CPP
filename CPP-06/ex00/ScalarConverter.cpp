@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/22 18:03:04 by lbento            #+#    #+#             */
-/*   Updated: 2026/06/11 09:41:22 by lbento           ###   ########.fr       */
+/*   Updated: 2026/06/14 22:20:43 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ void	ScalarConverter::convertDouble(double value)
 	else if (std::isinf(value))
 	{
 		if (value > 0)
-			std::cout << "float: +inff" << std::endl;
+			std::cout << "double: +inf" << std::endl;
 		else
-			std::cout << "float: -inff" << std::endl;
+			std::cout << "double: -inf" << std::endl;
 	}
 	else
 		std::cout << "double: " << value << std::endl;
@@ -100,7 +100,7 @@ void ScalarConverter::convert(const std::string &literal)
 	}
 	
 	if (std::isnan(value) || std::isinf(value))
-		std::cout << "char: Impossible.\n" << "int: Impossible." << std::endl;
+		std::cout << "char: Impossible\n" << "int: Impossible" << std::endl;
 	else
 	{
 		convertChar(value);
