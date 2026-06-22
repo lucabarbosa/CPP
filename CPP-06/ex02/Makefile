@@ -1,4 +1,4 @@
-NAME = a
+NAME = identify
 
 CXX      = c++
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98
