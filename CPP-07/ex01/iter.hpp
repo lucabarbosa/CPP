@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 19:29:03 by lbento            #+#    #+#             */
-/*   Updated: 2026/06/24 01:32:53 by lbento           ###   ########.fr       */
+/*   Updated: 2026/06/24 20:49:12 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #define ITER_HPP
 
 #include <iostream>
-#include <typeinfo>
 
 template<typename T, typename F>
 void  iter(T *array, const size_t size, F function)
@@ -26,13 +25,7 @@ void  iter(T *array, const size_t size, F function)
 }
 
 template <typename T>
-void  printValue(const T &value)
-{
-   std::cout << value << std::endl;
-}
-
-template <typename T>
-void  printConstValue(T const &value)
+void  printValue(T const &value)
 {
    std::cout << value << std::endl;
 }
