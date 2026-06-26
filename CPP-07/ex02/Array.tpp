@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/25 00:58:19 by lbento            #+#    #+#             */
-/*   Updated: 2026/06/25 01:17:36 by lbento           ###   ########.fr       */
+/*   Updated: 2026/06/25 22:17:19 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ Array<T>& Array<T>::operator=(const Array &other)
 	{
 		delete[] _value;
 		_size = other._size;
-		_array = new T[_size];
-		for (int i = 0; i < _size; i++)
+		_value = new T[_size];
+		for (unsigned int i = 0; i < _size; i++)
 			_value[i] = other._value[i];
 	}
 	return (*this);
@@ -63,7 +63,7 @@ template <typename T>
 T& Array<T>::operator[](unsigned int index)
 {
 	if (index >= _size)
-		throw std::out_of_range("Index out of range");
+		throw std::out_of_range("\033[0;31mIndex out of range\033[0m");
 	return _value[index];
 }
 
@@ -71,22 +71,20 @@ template <typename T>
 const T& Array<T>::operator[](unsigned int index) const
 {
 	if (index >= _size)
-		throw std::out_of_range("Index out of range");
+		throw std::out_of_range("\033[0;31mIndex out of range\033[0m");
 	return _value[index];
 }
 
 template <typename T>
-std::ostream&	operator<<(std::ostream &out, const Array<T> &value)
+std::ostream&	operator<<(std::ostream &os, const Array<T> &value)
 {
-	out << "{ ";
 	for (unsigned int i = 0; i < value.size(); i++)
 	{
-		out << value[i];
+		os << value[i];
 		if (i < value.size() - 1)
-			out << ", ";
+			os << ", ";
 	}
-	out << " }";
-	return out;
+	return os;
 }
 
 #endif
