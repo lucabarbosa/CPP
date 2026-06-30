@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 09:37:37 by lbento            #+#    #+#             */
-/*   Updated: 2026/06/28 23:00:33 by lbento           ###   ########.fr       */
+/*   Updated: 2026/06/30 00:42:57 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,12 @@ int	Span::longestSpan(void)
 
 void	Span::addArray(unsigned int size)
 {
-	for (unsigned int i; i < size; i++)
-		_numbers[i] = i;
+	if (_maxSize <= 0)
+		throw	std::length_error("\033[0;31mCannot insert number(s). Vector doesn't comport any number.\033[0m");
+	for (unsigned int i = 0; i < size; i++)
+	{
+		if (i >= _maxSize)
+			throw	std::length_error("\033[0;31mCannot insert number(s). Vector is full of numbers.\033[0m");
+		_numbers.push_back(i + 1);
+	}
 }

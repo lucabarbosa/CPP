@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 09:40:01 by lbento            #+#    #+#             */
-/*   Updated: 2026/06/28 22:56:16 by lbento           ###   ########.fr       */
+/*   Updated: 2026/06/30 00:50:14 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,15 @@ int	main(void)
 		std::cout << "\n\033[1;35mTEST WITH 5 NUMBERS\033[0m" << std::endl;
 		try
 		{
+			std::cout << "\033[0;35mCreating:\033[0m Span(5)" << std::endl;
 			Span sp = Span(5);
-			sp.addNumber(0);
+			std::cout << "\033[0;35mAdding 5 random numbers:\033[0m"
+				<< " Span(5) = {1 , 15, 50, 1000, 20000}" << std::endl;
+			sp.addNumber(1);
 			sp.addNumber(15);
 			sp.addNumber(50);
 			sp.addNumber(1000);
-			sp.addNumber(21000);
+			sp.addNumber(20000);
 			std::cout << "\033[0;35mLONGEST SPAN: \033[0m" << sp.longestSpan() << std::endl;
 			std::cout << "\033[0;35mSHORTEST SPAN: \033[0m" << sp.shortestSpan() << std::endl;
  		}
@@ -93,14 +96,15 @@ int	main(void)
 		}        
 	}
 	{
-		std::cout << "\n\033[1;35mTEST ADDING A RANGE BIGGER THAN SUPPORTS\033[0m" << std::endl;
+		std::cout << "\n\033[1;32mTEST ADDING A RANGE BIGGER THAN SUPPORTS\033[0m" << std::endl;
 		try
 		{
-			Span sp = Span(5);
-				for (size_t i = 0; i < 6; i++)
-			sp.addNumber(i);
-			std::cout << "\033[0;35mLONGEST SPAN: \033[0m" << sp.longestSpan() << std::endl;
-			std::cout << "\033[0;35mSHORTEST SPAN: \033[0m" << sp.shortestSpan() << std::endl;
+			std::cout << "\033[0;32mCreating:\033[0m Span(10)" << std::endl;
+			Span sp = Span(10);
+			std::cout << "\033[0;32mTrying add an array of 6\033[0m: sp.addArray(11)" << std::endl;
+			sp.addArray(11);
+			std::cout << "\033[0;32mLONGEST SPAN: \033[0m" << sp.longestSpan() << std::endl;
+			std::cout << "\033[0;32mSHORTEST SPAN: \033[0m" << sp.shortestSpan() << std::endl;
  		}
  		catch(const std::exception& e)
 		{
@@ -110,8 +114,7 @@ int	main(void)
 	{
 		std::cout << "\n\033[1;36mTEST WITH 100.000 NUMBERS\033[0m" << std::endl;
 		Span sp = Span(100000);
-		for (size_t i = 0; i < 100000; i++)
-			sp.addNumber(i);
+		sp.addArray(100000);
 		try
 		{
 			std::cout << "\033[0;36mLONGEST SPAN: \033[0m" << sp.longestSpan() << std::endl;
