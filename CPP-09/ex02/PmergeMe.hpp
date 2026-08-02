@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 00:54:18 by lbento            #+#    #+#             */
-/*   Updated: 2026/07/22 23:41:22 by lbento           ###   ########.fr       */
+/*   Updated: 2026/07/26 00:40:00 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ class PmergeMe
 	private:
 		std::vector<int>	_vecResult;
 		std::deque<int>	_deqResult;
+		int					_timeVec;
+		int					_timeDeq;
 	public:
 		PmergeMe(void);
 		PmergeMe(const PmergeMe &other);
@@ -36,7 +38,8 @@ class PmergeMe
 		void	checkNumbers(int argc, char **argv);
 		int	sortVec(void);
 		int	sortDeq(void);
-		void	printNum();
+		void	printNum(void);
+		void	printTime(void);
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 00:53:52 by lbento            #+#    #+#             */
-/*   Updated: 2026/07/22 23:40:35 by lbento           ###   ########.fr       */
+/*   Updated: 2026/07/26 00:49:02 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ int   main(int argc, char **argv)
 		try
 		{
 			PM.checkNumbers(argc, argv);
+			std::cout << "\033[0;35mBefore:  ";
+			PM.printNum();
+			std::cout << "\033[0;34mAfter :  ";
+			PM.printNum();
+			PM.printTime();
 		}
 		catch(const std::exception &e)
 		{

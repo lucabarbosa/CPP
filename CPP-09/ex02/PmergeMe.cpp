@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 00:54:07 by lbento            #+#    #+#             */
-/*   Updated: 2026/07/22 23:46:05 by lbento           ###   ########.fr       */
+/*   Updated: 2026/07/26 00:48:31 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,21 @@ int	PmergeMe::sortDeq(void)
 
 void	PmergeMe::printNum(void)
 {
+	std::vector<int>::iterator num;
+	std::cout << "\033[1;37m";
+	for (num = _vecResult.begin(); num != _vecResult.end(); ++num)
+	{
+		std::cout << *num;
+		if (num + 1 != _vecResult.end())
+			std::cout << " ";
+	}
+	std::cout << "\033[0m" << std::endl;
+}
 
+void	PmergeMe::printTime(void)
+{
+	std::cout << "\033[0;33mTime to process a range of \033[0;37m" << _vecResult.size() << "\033[0;33m elements with std::vector : \033[0m";
+	std::cout << _timeVec << std::endl;
+	std::cout << "\033[0;33mTime to process a range of \033[0;37m" << _vecResult.size() << "\033[0;33m elements with std::deque  : \033[0m";
+	std::cout << _timeDeq << std::endl;
 }
