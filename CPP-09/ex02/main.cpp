@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 00:53:52 by lbento            #+#    #+#             */
-/*   Updated: 2026/07/26 00:49:02 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/02 03:21:48 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@ int   main(int argc, char **argv)
 		{
 			PM.checkNumbers(argc, argv);
 			std::cout << "\033[0;35mBefore:  ";
-			PM.printNum();
+			PM.printVec();
+			PM.sortVec();
+			PM.sortDeq();
 			std::cout << "\033[0;34mAfter :  ";
-			PM.printNum();
+			PM.printVec();
 			PM.printTime();
 		}
 		catch(const std::exception &e)

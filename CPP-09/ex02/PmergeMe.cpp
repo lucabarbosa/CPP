@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 00:54:07 by lbento            #+#    #+#             */
-/*   Updated: 2026/07/26 00:48:31 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/02 07:36:20 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,56 @@ void	PmergeMe::checkNumbers(int argc, char **argv)
 	}
 }
 
-int	PmergeMe::sortVec(void)
+static double getTime(void);
+
+void	PmergeMe::sortVec(void)
 {
-	return (0);
+	double start;
+	double end;
+	start = getTime();
+	_vecResult = fordJohnsonVec(_vecResult);
+	end = getTime();
+	_timeVec = end - start;
 }
 
-int	PmergeMe::sortDeq(void)
+std::vector<int> fordJohnsonVec(std::vector<int> input)
 {
-	return (0);
+	bool	isUnpaired;
+	int	unpaired = 0;
+	isUnpaired = (input.size() % 2 != 0);
+	if (isUnpaired)
+	{
+		unpaired = input.back();
+		input.pop_back();
+	}
+	std::vector<int> smalls;
+	std::vector<int> bigs;
+	for (size_t i = 0;i < input.size(); i++)
+	{
+		if (input[i] < input[i + 1])
+		{
+			smalls.push_back(input[i]);
+			bigs.push_back(input[i + 1]);
+		}
+		else
+		{
+			smalls.push_back(input[i + 1]);
+			bigs.push_back(input[i]);
+		}
+	}
 }
 
-void	PmergeMe::printNum(void)
+void	PmergeMe::sortDeq(void)
+{
+	double start;
+	double end;
+	start = getTime();
+	_deqResult = fordJohnsonDeq(_deqResult);
+	end = getTime();
+	_timeDeq = end - start;
+}
+
+void	PmergeMe::printVec(void)
 {
 	std::vector<int>::iterator num;
 	std::cout << "\033[1;37m";
@@ -88,10 +127,31 @@ void	PmergeMe::printNum(void)
 	std::cout << "\033[0m" << std::endl;
 }
 
+void	PmergeMe::printDeq(void)
+{
+	std::deque<int>::iterator num;
+	std::cout << "\033[1;37m";
+	for (num = _deqResult.begin(); num != _deqResult.end(); ++num)
+	{
+		std::cout << *num;
+		if (num + 1 != _deqResult.end())
+			std::cout << " ";
+	}
+	std::cout << "\033[0m" << std::endl;
+}
+
+static double getTime(void)
+{
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000000.0 + tv.tv_usec);
+}
+
 void	PmergeMe::printTime(void)
 {
+	std::cout << std::fixed << std::setprecision(5);
 	std::cout << "\033[0;33mTime to process a range of \033[0;37m" << _vecResult.size() << "\033[0;33m elements with std::vector : \033[0m";
-	std::cout << _timeVec << std::endl;
+	std::cout << _timeVec << " us" << std::endl;
 	std::cout << "\033[0;33mTime to process a range of \033[0;37m" << _vecResult.size() << "\033[0;33m elements with std::deque  : \033[0m";
-	std::cout << _timeDeq << std::endl;
+	std::cout << _timeDeq << " us" << std::endl;
 }

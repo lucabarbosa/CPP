@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 00:54:18 by lbento            #+#    #+#             */
-/*   Updated: 2026/07/26 00:40:00 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/02 07:21:35 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <vector>
 #include <deque>
 #include <ctime>
+#include <sys/time.h>
+#include <iomanip>
 #include <cstdlib>
 #include <cerrno>
 #include <climits>
@@ -27,8 +29,8 @@ class PmergeMe
 	private:
 		std::vector<int>	_vecResult;
 		std::deque<int>	_deqResult;
-		int					_timeVec;
-		int					_timeDeq;
+		double					_timeVec;
+		double					_timeDeq;
 	public:
 		PmergeMe(void);
 		PmergeMe(const PmergeMe &other);
@@ -36,10 +38,14 @@ class PmergeMe
 		~PmergeMe(void);
 
 		void	checkNumbers(int argc, char **argv);
-		int	sortVec(void);
-		int	sortDeq(void);
-		void	printNum(void);
+		void	sortVec(void);
+		void	sortDeq(void);
+		void	printVec(void);
+		void	printDeq(void);
 		void	printTime(void);
 };
+
+std::vector<int> fordJohnsonVec(std::vector<int> input);
+std::deque<int> fordJohnsonDeq(std::deque<int> input);
 
 #endif
