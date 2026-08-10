@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/14 23:34:34 by lbento            #+#    #+#             */
-/*   Updated: 2026/06/22 19:35:12 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/10 15:05:47 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 class Base
 {
 	public:
-	virtual ~Base(void);
+		virtual ~Base(void);
 };
 
 

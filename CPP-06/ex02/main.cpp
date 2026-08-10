@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/14 23:36:02 by lbento            #+#    #+#             */
-/*   Updated: 2026/06/22 19:35:15 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/10 15:29:36 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,18 @@ void identify(Base& p);
 
 int   main(void)
 {
+	std::srand(static_cast<unsigned int>(std::time(NULL)));
 	{
-		std::cout << "\033[3;33m Creating and identifying classes by pointers\033[0" << std::endl;
+		std::cout << "\033[3;33m Creating and identifying classes by pointers\033[0m" << std::endl;
 		Base *a = new A();
 		Base *b = new B();
 		Base *c = new C();
 		identify(a);
 		identify(b);
 		identify(c);
-		std::cout << "\033[3;33m Identifying classes by references\033[0" << std::endl;
+		std::cout << "\n";
+
+		std::cout << "\033[3;33m Identifying classes by references\033[0m" << std::endl;
 		identify(*a);
 		identify(*b);
 		identify(*c);
@@ -38,7 +41,7 @@ int   main(void)
 		delete c;
 	}
 	{
-		std::cout << "\n\033[3;33m Creating and identifying random classes\033[0" << std::endl;
+		std::cout << "\n\033[3;33m Creating and identifying random classes\033[0m" << std::endl;
 		Base*	base;
 		for (int i = 0; i < 10; i++)
 		{
@@ -75,17 +78,20 @@ Base * generate(void)
 
 void	identify(Base* p)
 {
-	if (dynamic_cast<A*>(p))
+	Base *temp = dynamic_cast<A*>(p);
+	if (temp != NULL)
 	{
 		std::cout << "\033[0;32mPointed class is A!\033[0m" << std::endl;
 		return ;
 	}
-	else if (dynamic_cast<B*>(p))
+	temp = dynamic_cast<B*>(p);
+	if (temp != NULL)
 	{
 		std::cout << "\033[0;36mPointed class is B!\033[0m" << std::endl;
 		return ;
 	}
-	else if (dynamic_cast<C*>(p))
+	temp = dynamic_cast<B*>(p);
+	if (temp != NULL)
 	{
 		std::cout << "\033[0;35mPointed class is C!\033[0m" << std::endl;
 		return ;
@@ -94,38 +100,29 @@ void	identify(Base* p)
 		std::cout << "\033[0;31mPointed class is unknown type!\033[0m" << std::endl;
 }
 
-void identify(Base& p)
+void identify(Base &p)
 {
-	 try
-	 {
-		  dynamic_cast<A&>(p);
-		  std::cout << "\033[0;32mReferenced class is A!\033[0m" << std::endl;
-		  return ;
-	 }
-	 catch(const std::exception& e)
-	 {
-		  
-	 }
+	try
+	{
+		(void)dynamic_cast<A&>(p);
+		std::cout << "Type is A!\n";
+		return ;
+	}
+	catch(const std::exception& e){}
 
-	 try
-	 {
-		  dynamic_cast<B&>(p);
-		  std::cout << "\033[0;36mReferenced class is B!\033[0m" << std::endl;
-		  return ;
-	 }
-	 catch(const std::exception& e)
-	 {
-		  
-	 }
+	try
+	{
+		(void)dynamic_cast<B&>(p);
+		std::cout << "\033[0;36mReferenced class is B!\033[0m" << std::endl;
+		return ;
+	}
+	catch(const std::exception& e){}
 
-	 try
-	 {
-		  dynamic_cast<C&>(p);
-		  std::cout << "\033[0;35mReferenced class is C!\033[0m" << std::endl;
-		  return ;
-	 }
-	 catch(const std::exception& e)
-	 {
-		  
-	 }
+	try
+	{
+		(void)dynamic_cast<C&>(p);
+		std::cout << "\033[0;35mReferenced class is C!\033[0m" << std::endl;
+		return ;
+	}
+	catch(const std::exception& e){}
 }
