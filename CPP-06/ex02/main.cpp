@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/14 23:36:02 by lbento            #+#    #+#             */
-/*   Updated: 2026/08/10 15:29:36 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/10 16:17:23 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	identify(Base* p)
 		std::cout << "\033[0;36mPointed class is B!\033[0m" << std::endl;
 		return ;
 	}
-	temp = dynamic_cast<B*>(p);
+	temp = dynamic_cast<C*>(p);
 	if (temp != NULL)
 	{
 		std::cout << "\033[0;35mPointed class is C!\033[0m" << std::endl;

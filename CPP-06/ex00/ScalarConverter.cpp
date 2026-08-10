@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/22 18:03:04 by lbento            #+#    #+#             */
-/*   Updated: 2026/08/10 14:31:23 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/10 15:58:54 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ScalarConverter::convertChar(double value)
 {
 	if (value < 0 || value > 127)
 		std::cout << "\033[0;32mchar:\033[0;31m Impossible \033[0m" << std::endl;
-	else if (((int)value >= 0 && (int)value <= 31) || (int)value == 127)
+	else if ((static_cast<int>(value) >= 0 && static_cast<int>(value) <= 31) || static_cast<int>(value) == 127)
 		std::cout << "\033[0;32mchar:\033[0;31m Not displayable\033[0m" << std::endl;
 	else
 		std::cout << "\033[0;32mchar:\033[0m '" << static_cast<char>((int)value) << "'" << std::endl;
