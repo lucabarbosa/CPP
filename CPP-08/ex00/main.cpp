@@ -6,11 +6,14 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/25 16:37:17 by lbento            #+#    #+#             */
-/*   Updated: 2026/06/28 10:54:39 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/11 18:01:22 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "easyfind.hpp"
+#include <vector>
+#include <list>
+#include <deque>
 
 int	main(void)
 {

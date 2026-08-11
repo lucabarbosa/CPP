@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/25 16:37:17 by lbento            #+#    #+#             */
-/*   Updated: 2026/06/28 10:05:55 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/11 17:54:14 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 #include <iostream>
 #include <algorithm>
-#include <vector>
-#include <list>
+#include <stdexcept>
 
 template<typename T>
 typename T::iterator easyfind(T &container, const int value)
