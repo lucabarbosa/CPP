@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/30 00:51:32 by lbento            #+#    #+#             */
-/*   Updated: 2026/06/30 22:28:30 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/11 18:23:21 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int	main(void)
 {
 	{
-		std::cout << "\033[1;33mTESTS FROM SUBJECT\033[0m" << std::endl;
+		std::cout << "\033[1;32mTESTS FROM SUBJECT\033[0m" << std::endl;
 		MutantStack<int> mstack;
 		mstack.push(5);
 		mstack.push(17);
@@ -110,6 +110,30 @@ int	main(void)
 		{
 			std::cout << *it2;
 			++it2;
+		}
+		std::cout << std::endl;
+	}
+	{
+		std::cout << "\n\033[1;35mTESTING WITH CONST\033[0m" << std::endl;
+		MutantStack<int> mstack;
+		mstack.push(42);
+		mstack.push(21);
+		mstack.push(7);
+		mstack.push(100);
+
+		const MutantStack<int> cmstack(mstack);
+
+		std::cout << "\033[0;35mConst stack top: \033[0m" << cmstack.top() << std::endl;
+		std::cout << "\033[0;35mConst stack size: \033[0m" << cmstack.size() << std::endl;
+		std::cout << "\033[0;35mConst stack empty: \033[0m" << cmstack.empty() << std::endl;
+
+		MutantStack<int>::const_iterator it = cmstack.begin();
+		MutantStack<int>::const_iterator ite = cmstack.end();
+		std::cout << "\033[0;35mPrinting const stack: \033[0m";
+		while (it != ite)
+		{
+			std::cout << *it << " ";
+			++it;
 		}
 		std::cout << std::endl;
 	}

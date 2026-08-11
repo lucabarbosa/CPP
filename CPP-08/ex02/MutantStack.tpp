@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/30 21:58:01 by lbento            #+#    #+#             */
-/*   Updated: 2026/06/30 20:05:26 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/11 18:11:51 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typename MutantStack<T>::const_iterator MutantStack<T>::begin(void) const
 template<typename T>
 typename MutantStack<T>::const_iterator MutantStack<T>::end(void) const
 {
-	return (this->c.cend());
+	return (this->c.end());
 }
 
 #endif
