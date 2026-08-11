@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 19:27:17 by lbento            #+#    #+#             */
-/*   Updated: 2026/06/24 20:54:03 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/11 12:01:28 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,16 @@ int   main(void)
 		std::cout << "\033[3;36m Tests with char array" << std::endl;
 		char array[3] = {'a', 'b', 'c'};
 		iter(array, 3, printValue<char>);
+		std::cout << "\033[0;36m Adding elements:" << std::endl;
+		iter(array, 3, addElement<char>);
+		iter(array, 3, printValue<char>);
 		std::cout << "\033[0m" << std::endl;
 	}
 	{
 		std::cout << "\033[3;33m Tests with string array" << std::endl;
 		std::string array[3] = {"One", "Two", "Three"};
 		iter(array, 3, printValue<std::string>);
-		std::cout << "\033[0m" << std::endl;
+		std::cout << "\033[0m"<< std::endl;
 	}
 	{
 		std::cout << "\033[3;33m Tests with CONST string array" << std::endl;

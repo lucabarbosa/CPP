@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/22 19:27:17 by lbento            #+#    #+#             */
-/*   Updated: 2026/06/24 00:45:05 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/11 11:08:37 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ int   main(void)
 		std::cout << "c = " << c << ", d = " << d << std::endl;
 		std::cout << "min(c, d) = " << ::min(c, d) << std::endl;
 		std::cout << "max(c, d) = " << ::max(c, d) << std::endl;
-		std::cout << "\033[0m" << std::endl;
+		std::cout << "\033[0m";
 	}
+	std::cout << "---------------" << std::endl;
 	{
 		std::cout << "\033[1;35m Testing with ints\033[0m" << std::endl;
 		int a = 4;
@@ -40,9 +41,9 @@ int   main(void)
 		
 		std::cout << "\033[0;35mNumbers \033[0ma= " << a << " b= " << b << std::endl;
 		::swap(a, b);
-		std::cout << "\033[0;35mNumbers after swaps \033[0ma= " << a << " b= " << b << std::endl;
-		std::cout << "\033[0;35mMin num (a, b) \033[0ma= " << ::min(a, b) << std::endl;
-		std::cout << "\033[0;35mMax num (a, b) \033[0ma= " << ::max(a, b) << std::endl;
+		std::cout << "\033[0;35mNumbers after swaps \033[0ma= " << a << " | b= " << b << std::endl;
+		std::cout << "\033[0;35mMin num (a, b): \033[0m" << ::min(a, b) << std::endl;
+		std::cout << "\033[0;35mMax num (a, b): \033[0m" << ::max(a, b) << std::endl;
 		std::cout << "\033[0m" << std::endl;
 	}
 	{
@@ -52,21 +53,21 @@ int   main(void)
 		
 		std::cout << "\033[0;36mNumbers \033[0ma= " << a << " b= " << b << std::endl;
 		::swap(a, b);
-		std::cout << "\033[0;36mNumbers after swaps \033[0ma= " << a << " b= " << b << std::endl;
-		std::cout << "\033[0;36mMin num (a, b) \033[0ma= " << ::min(a, b) << std::endl;
-		std::cout << "\033[0;36mMax num (a, b) \033[0ma= " << ::max(a, b) << std::endl;
+		std::cout << "\033[0;36mNumbers after swaps \033[0ma= " << a << " | b= " << b << std::endl;
+		std::cout << "\033[0;36mMin num (a, b): \033[0m" << ::min(a, b) << std::endl;
+		std::cout << "\033[0;36mMax num (a, b): \033[0m" << ::max(a, b) << std::endl;
 		std::cout << "\033[0m" << std::endl;
 	}
 	{
 		std::cout << "\033[1;34m Testing with chars\033[0m" << std::endl;
 		char a = 'a';
-		char b = 'b';
+		char b = 'z';
 		
-		std::cout << "\033[0;34mNumbers \033[0ma= " << a << " b= " << b << std::endl;
+		std::cout << "\033[0;34mChars \033[0ma= " << a << " b= " << b << std::endl;
 		::swap(a, b);
-		std::cout << "\033[0;34mNumbers after swaps \033[0ma= " << a << " b= " << b << std::endl;
-		std::cout << "\033[0;34mMin num (a, b) \033[0ma= " << ::min(a, b) << std::endl;
-		std::cout << "\033[0;34mMax num (a, b) \033[0ma= " << ::max(a, b) << std::endl;
+		std::cout << "\033[0;34mChar after swaps \033[0ma= " << a << " | b= " << b << std::endl;
+		std::cout << "\033[0;34mMin num (a, b): \033[0m" << ::min(a, b) << std::endl;
+		std::cout << "\033[0;34mMax num (a, b): \033[0m" << ::max(a, b) << std::endl;
 		std::cout << "\033[0m" << std::endl;
 	}
 	{
@@ -76,9 +77,9 @@ int   main(void)
 		
 		std::cout << "\033[0;32mNumbers \033[0ma= " << a << " b= " << b << std::endl;
 		::swap(a, b);
-		std::cout << "\033[0;32mNumbers after swaps \033[0ma= " << a << " b= " << b << std::endl;
-		std::cout << "\033[0;32mMin num (a, b) \033[0ma= " << ::min(a, b) << std::endl;
-		std::cout << "\033[0;32mMax num (a, b) \033[0ma= " << ::max(a, b) << std::endl;
+		std::cout << "\033[0;32mNumbers after swaps \033[0ma= " << a << " | b= " << b << std::endl;
+		std::cout << "\033[0;32mMin num (a, b): \033[0m" << ::min(a, b) << std::endl;
+		std::cout << "\033[0;32mMax num (a, b): \033[0m" << ::max(a, b) << std::endl;
 		std::cout << "\033[0m" << std::endl;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 19:29:03 by lbento            #+#    #+#             */
-/*   Updated: 2026/06/24 20:49:12 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/11 11:47:54 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ void  iter(T *array, const size_t size, F function)
       function(array[i]);
 }
 
-template <typename T>
-void  printValue(T const &value)
+template <typename F>
+void  printValue(F const &value)
 {
    std::cout << value << std::endl;
 }
 
-template <typename T>
-void  addElement(T &value)
+template <typename F>
+void  addElement(F &value)
 {
    value+= 1;
 }
