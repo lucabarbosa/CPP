@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/14 23:36:02 by lbento            #+#    #+#             */
-/*   Updated: 2026/08/10 16:17:23 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/11 15:17:32 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void identify(Base &p)
 	try
 	{
 		(void)dynamic_cast<A&>(p);
-		std::cout << "Type is A!\n";
+		std::cout << "\033[0;32mReferenced class is A!\033[0m" << std::endl;
 		return ;
 	}
 	catch(const std::exception& e){}
