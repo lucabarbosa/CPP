@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 09:37:07 by lbento            #+#    #+#             */
-/*   Updated: 2026/06/28 22:58:28 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/11 18:49:47 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <stdexcept>
 #include <vector>
 
 class Span

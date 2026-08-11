@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/28 09:40:01 by lbento            #+#    #+#             */
-/*   Updated: 2026/06/30 00:50:14 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/11 19:01:21 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(void)
 			std::cerr << e.what() << std::endl;
 		}
 	}
-	std::cout << "\n\033[4;37m- Testing limits -\033[0m" << std::endl;
+	std::cout << "\n\033[4;37m------ Testing limits ------\033[0m" << std::endl;
 	{
 		try
 		{
@@ -96,7 +96,7 @@ int	main(void)
 		}        
 	}
 	{
-		std::cout << "\n\033[1;32mTEST ADDING A RANGE BIGGER THAN SUPPORTS\033[0m" << std::endl;
+		std::cout << "\n\033[1;32mTEST ADDING A RANGE BIGGER THAN CAPACITY\033[0m" << std::endl;
 		try
 		{
 			std::cout << "\033[0;32mCreating:\033[0m Span(10)" << std::endl;
@@ -110,6 +110,41 @@ int	main(void)
 		{
 			std::cerr << e.what() << '\n';
 		}        
+	}
+	{
+		std::cout << "\n\033[1;30mTEST WITH ITERATORS WITH RANGE BIGGER THAN CAPACITY\033[0m" << std::endl;
+		std::cout << "\033[0;30mCreating:\033[0m Span(3)" << std::endl;
+		Span sp = Span(3);
+		std::vector<int> numbers;
+		for (int i = 0; i < 4; i++)
+			numbers.push_back(i);
+		std::cout << "\033[0;30mTrying checkRange with 4 numbers on a Span(3)\033[0m" << std::endl;
+		try
+		{
+			sp.checkRange(numbers.begin(), numbers.end());
+		}
+		catch (const std::exception &e)
+		{
+		std::cerr << e.what() << std::endl;
+		}
+	}
+	{
+		std::cout << "\n\033[1;39mTEST ITERATORS WITH 10.000 NUMBERS\033[0m" << std::endl;
+		std::vector<int> numbers;
+		for (int i = 0; i < 10000; i++)
+			numbers.push_back(i);
+		Span sp = Span(10000);
+		std::cout << "\033[0;39mFilling Span(10000) with a single checkRange() call\033[0m" << std::endl;
+		try
+		{
+			sp.checkRange(numbers.begin(), numbers.end());
+			std::cout << "\033[0;39mSHORTEST SPAN: \033[0m" << sp.shortestSpan() << std::endl;
+			std::cout << "\033[0;39mLONGEST SPAN: \033[0m" << sp.longestSpan() << std::endl;
+		}
+		catch (const std::exception &e)
+		{
+			std::cerr << e.what() << std::endl;
+		}
 	}
 	{
 		std::cout << "\n\033[1;36mTEST WITH 100.000 NUMBERS\033[0m" << std::endl;
