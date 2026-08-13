@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 00:54:18 by lbento            #+#    #+#             */
-/*   Updated: 2026/08/13 13:01:36 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/13 18:09:39 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 #include <utility>
 #include <algorithm>
 #include <ctime>
-#include <sys/time.h>
 #include <iomanip>
 #include <cstdlib>
 #include <cerrno>

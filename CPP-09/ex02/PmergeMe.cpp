@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 00:54:07 by lbento            #+#    #+#             */
-/*   Updated: 2026/08/13 13:04:13 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/13 18:16:55 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,6 @@ void	PmergeMe::checkNumbers(int argc, char **argv)
 	}
 }
 
-static double	getTime(void)
-{
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000000.0 + tv.tv_usec);
-}
-
 static std::vector<size_t>	getJacobsthalOrder(size_t pendSize)
 {
 	std::vector<size_t>	order;
@@ -105,8 +97,6 @@ static std::vector<size_t>	getJacobsthalOrder(size_t pendSize)
 	}
 	return (order);
 }
-
-/* ------------------------- std::vector implementation ------------------------- */
 
 std::vector<int>	fordJohnsonVec(std::vector<int> input)
 {
@@ -181,8 +171,6 @@ std::vector<int>	fordJohnsonVec(std::vector<int> input)
 	return (mainChain);
 }
 
-/* -------------------------- std::deque implementation -------------------------- */
-
 std::deque<int>	fordJohnsonDeq(std::deque<int> input)
 {
 	if (input.size() <= 1)
@@ -256,22 +244,26 @@ std::deque<int>	fordJohnsonDeq(std::deque<int> input)
 	return (mainChain);
 }
 
-/* ------------------------------- member functions ------------------------------- */
-
 void	PmergeMe::sortVec(void)
 {
-	double	start = getTime();
+	clock_t	start;
+	clock_t	end;
+
+	start = clock();
 	_vecResult = fordJohnsonVec(_vecResult);
-	double	end = getTime();
-	_timeVec = end - start;
+	end = clock();
+	_timeVec = static_cast<double>(end - start) * 1000000.0 / CLOCKS_PER_SEC;
 }
 
 void	PmergeMe::sortDeq(void)
 {
-	double	start = getTime();
+	clock_t	start;
+	clock_t	end;
+
+	start = clock();
 	_deqResult = fordJohnsonDeq(_deqResult);
-	double	end = getTime();
-	_timeDeq = end - start;
+	end = clock();
+	_timeDeq = static_cast<double>(end - start) * 1000000.0 / CLOCKS_PER_SEC;
 }
 
 void	PmergeMe::printVec(void)
@@ -300,9 +292,9 @@ void	PmergeMe::printDeq(void)
 
 void	PmergeMe::printTime(void)
 {
-	std::cout << std::fixed << std::setprecision(5);
+	std::cout << std::fixed << std::setprecision(0);
 	std::cout << "\033[0;33mTime to process a range of \033[0;37m" << _vecResult.size()
-		<< "\033[0;33m elements with std::vector : \033[0m" << _timeVec << " us" << std::endl;
+		<< "\033[0;33m elements with std::vector : \033[0m" << _timeVec << " µs" << std::endl;
 	std::cout << "\033[0;33mTime to process a range of \033[0;37m" << _deqResult.size()
-		<< "\033[0;33m elements with std::deque  : \033[0m" << _timeDeq << " us" << std::endl;
+		<< "\033[0;33m elements with std::deque  : \033[0m" << _timeDeq << " µs" << std::endl;
 }
