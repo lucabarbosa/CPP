@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 00:51:45 by lbento            #+#    #+#             */
-/*   Updated: 2026/07/22 00:43:53 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/13 16:54:11 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@ int RPN::solved(const std::string input)
 			if (nums.size() < 2)
 				throw std::runtime_error("\033[0;31mInsufficient operands\033[0m");
 
-			int b = nums.top(); nums.pop();
-			int a = nums.top(); nums.pop();
+			int b = nums.top();
+			nums.pop();
+			int a = nums.top();
+			nums.pop();
 			int res;
 			if (c == '/' && b == 0)
 				throw std::runtime_error("\033[0;31mDivision by zero\033[0m");				

@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 00:51:29 by lbento            #+#    #+#             */
-/*   Updated: 2026/07/22 00:44:17 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/13 16:52:17 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ int	main(int argc, char **argv)
 {
 	if (argc != 2)
 	{
-		std::cerr << "\033[0;31mExpected just one argument.\033[0m" << std::endl;
-		std::cerr << "\033[0;31mUse ./RPN <inverted math expression>\033[0m" << std::endl;
+		std::cerr << "\033[1;31mExpected just one argument.\033[0m" << std::endl;
+		std::cout << "\033[0;31mUse ./RPN <Reverse Polish Notation>.\033[0m" << std::endl;
+		std::cout << "\033[0;31mTry put the numbers before operators.\033[0m" << std::endl;
 		return (1);
 	}
 	{
@@ -31,6 +32,7 @@ int	main(int argc, char **argv)
 		catch(const std::exception &e)
 		{
 			std::cerr << "\033[1;31mError: \033[0m" << e.what() << std::endl;
+			return (1);
 		}
 		
 	}
