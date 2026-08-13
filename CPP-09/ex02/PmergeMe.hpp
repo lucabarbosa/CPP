@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 00:54:18 by lbento            #+#    #+#             */
-/*   Updated: 2026/08/02 07:21:35 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/13 13:01:36 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <iostream>
 #include <vector>
 #include <deque>
+#include <utility>
+#include <algorithm>
 #include <ctime>
 #include <sys/time.h>
 #include <iomanip>
@@ -23,6 +25,8 @@
 #include <cerrno>
 #include <climits>
 #include <cctype>
+#include <stdexcept>
+#include <string>
 
 class PmergeMe
 {

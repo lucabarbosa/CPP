@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 00:50:28 by lbento            #+#    #+#             */
-/*   Updated: 2026/07/13 23:31:40 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/13 12:31:13 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ BitcoinExchange::~BitcoinExchange(void)
 }
 
 
-static bool	splitLine(const std::string &line, const std::string &delim,
-		std::string &left, std::string &right);
+static bool	splitLine(const std::string &line, const std::string &delim, std::string &left, std::string &right);
 static	std::string trimLine(const std::string &s);
 
 void	BitcoinExchange::loadInput(const std::string file_name)
@@ -115,6 +114,17 @@ void	BitcoinExchange::processInput(std::string file_name)
 	}
 }
 
+void	checkFile(std::ifstream &file, const std::string &name, std::string expect_line)
+{
+	if (!file.is_open())
+		throw std::runtime_error("\033[0;31mCan't open the file: \033[0m" + name);
+
+	std::string line;
+	std::getline(file, line);
+	if (line != expect_line)
+		throw std::runtime_error("\033[0;31mInvalid expected file header: \033[0m" + name);
+}
+
 bool	checkDate(const std::string date)
 {
 	int daysInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -143,17 +153,6 @@ bool	checkDate(const std::string date)
 	if (day < 1 || day > maxDay)
 		return false;
 	return true;
-}
-
-void	checkFile(std::ifstream &file, const std::string &name, std::string expect_line)
-{
-	if (!file.is_open())
-		throw std::runtime_error("\033[0;31mCan't open the file: \033[0m" + name);
-
-	std::string line;
-	std::getline(file, line);
-	if (line != expect_line)
-		throw std::runtime_error("\033[0;31mInvalid expected file header: \033[0m" + name);
 }
 
 static bool splitLine(const std::string &line, const std::string &delim,

@@ -6,13 +6,13 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 00:54:07 by lbento            #+#    #+#             */
-/*   Updated: 2026/08/02 07:36:20 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/13 13:04:13 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
-PmergeMe::PmergeMe(void)
+PmergeMe::PmergeMe(void) : _timeVec(0), _timeDeq(0)
 {
 
 }
@@ -28,6 +28,8 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &other)
 	{
 		_vecResult = other._vecResult;
 		_deqResult = other._deqResult;
+		_timeVec = other._timeVec;
+		_timeDeq = other._timeDeq;
 	}
 	return (*this);
 }
@@ -65,60 +67,217 @@ void	PmergeMe::checkNumbers(int argc, char **argv)
 	}
 }
 
-static double getTime(void);
+static double	getTime(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000000.0 + tv.tv_usec);
+}
+
+static std::vector<size_t>	getJacobsthalOrder(size_t pendSize)
+{
+	std::vector<size_t>	order;
+
+	if (pendSize == 0)
+		return (order);
+	order.push_back(2);
+	if (pendSize == 1)
+		return (order);
+
+	std::vector<size_t>	jac;
+	jac.push_back(0);
+	jac.push_back(1);
+	while (jac.back() <= pendSize + 1)
+		jac.push_back(jac[jac.size() - 1] + 2 * jac[jac.size() - 2]);
+
+	size_t	prev = 2;
+	for (size_t idx = 3; idx < jac.size(); idx++)
+	{
+		size_t	curr = jac[idx];
+		if (curr > pendSize + 1)
+			curr = pendSize + 1;
+		for (size_t k = curr; k > prev; k--)
+			order.push_back(k);
+		prev = curr;
+		if (prev >= pendSize + 1)
+			break;
+	}
+	return (order);
+}
+
+/* ------------------------- std::vector implementation ------------------------- */
+
+std::vector<int>	fordJohnsonVec(std::vector<int> input)
+{
+	if (input.size() <= 1)
+		return (input);
+
+	bool	hasStray = (input.size() % 2 != 0);
+	int		stray = 0;
+	if (hasStray)
+	{
+		stray = input.back();
+		input.pop_back();
+	}
+
+	std::vector<std::pair<int, int> >	pairs;
+	for (size_t i = 0; i < input.size(); i += 2)
+	{
+		if (input[i] > input[i + 1])
+			pairs.push_back(std::make_pair(input[i], input[i + 1]));
+		else
+			pairs.push_back(std::make_pair(input[i + 1], input[i]));
+	}
+
+	std::vector<int>	largers;
+	for (size_t i = 0; i < pairs.size(); i++)
+		largers.push_back(pairs[i].first);
+
+	std::vector<int>	sortedLargers = fordJohnsonVec(largers);
+	std::vector<int>	mainChain(sortedLargers);
+
+	for (size_t i = 0; i < pairs.size(); i++)
+	{
+		if (pairs[i].first == sortedLargers[0])
+		{
+			mainChain.insert(mainChain.begin(), pairs[i].second);
+			break;
+		}
+	}
+
+	std::vector<int>	pend;
+	for (size_t i = 1; i < sortedLargers.size(); i++)
+	{
+		for (size_t j = 0; j < pairs.size(); j++)
+		{
+			if (pairs[j].first == sortedLargers[i])
+			{
+				pend.push_back(pairs[j].second);
+				break;
+			}
+		}
+	}
+
+	std::vector<size_t>	order = getJacobsthalOrder(pend.size());
+	for (size_t i = 0; i < order.size(); i++)
+	{
+		size_t	pendIdx = order[i] - 2;
+		if (pendIdx >= pend.size())
+			continue;
+		int		value = pend[pendIdx];
+		std::vector<int>::iterator	limit;
+		limit = std::find(mainChain.begin(), mainChain.end(), sortedLargers[pendIdx + 1]);
+		std::vector<int>::iterator	pos = std::lower_bound(mainChain.begin(), limit, value);
+		mainChain.insert(pos, value);
+	}
+
+	if (hasStray)
+	{
+		std::vector<int>::iterator	pos;
+		pos = std::lower_bound(mainChain.begin(), mainChain.end(), stray);
+		mainChain.insert(pos, stray);
+	}
+	return (mainChain);
+}
+
+/* -------------------------- std::deque implementation -------------------------- */
+
+std::deque<int>	fordJohnsonDeq(std::deque<int> input)
+{
+	if (input.size() <= 1)
+		return (input);
+
+	bool	hasStray = (input.size() % 2 != 0);
+	int		stray = 0;
+	if (hasStray)
+	{
+		stray = input.back();
+		input.pop_back();
+	}
+
+	std::deque<std::pair<int, int> >	pairs;
+	for (size_t i = 0; i < input.size(); i += 2)
+	{
+		if (input[i] > input[i + 1])
+			pairs.push_back(std::make_pair(input[i], input[i + 1]));
+		else
+			pairs.push_back(std::make_pair(input[i + 1], input[i]));
+	}
+
+	std::deque<int>	largers;
+	for (size_t i = 0; i < pairs.size(); i++)
+		largers.push_back(pairs[i].first);
+
+	std::deque<int>	sortedLargers = fordJohnsonDeq(largers);
+	std::deque<int>	mainChain(sortedLargers);
+
+	for (size_t i = 0; i < pairs.size(); i++)
+	{
+		if (pairs[i].first == sortedLargers[0])
+		{
+			mainChain.insert(mainChain.begin(), pairs[i].second);
+			break;
+		}
+	}
+
+	std::deque<int>	pend;
+	for (size_t i = 1; i < sortedLargers.size(); i++)
+	{
+		for (size_t j = 0; j < pairs.size(); j++)
+		{
+			if (pairs[j].first == sortedLargers[i])
+			{
+				pend.push_back(pairs[j].second);
+				break;
+			}
+		}
+	}
+
+	std::vector<size_t>	order = getJacobsthalOrder(pend.size());
+	for (size_t i = 0; i < order.size(); i++)
+	{
+		size_t	pendIdx = order[i] - 2;
+		if (pendIdx >= pend.size())
+			continue;
+		int		value = pend[pendIdx];
+		std::deque<int>::iterator	limit;
+		limit = std::find(mainChain.begin(), mainChain.end(), sortedLargers[pendIdx + 1]);
+		std::deque<int>::iterator	pos = std::lower_bound(mainChain.begin(), limit, value);
+		mainChain.insert(pos, value);
+	}
+
+	if (hasStray)
+	{
+		std::deque<int>::iterator	pos;
+		pos = std::lower_bound(mainChain.begin(), mainChain.end(), stray);
+		mainChain.insert(pos, stray);
+	}
+	return (mainChain);
+}
+
+/* ------------------------------- member functions ------------------------------- */
 
 void	PmergeMe::sortVec(void)
 {
-	double start;
-	double end;
-	start = getTime();
+	double	start = getTime();
 	_vecResult = fordJohnsonVec(_vecResult);
-	end = getTime();
+	double	end = getTime();
 	_timeVec = end - start;
-}
-
-std::vector<int> fordJohnsonVec(std::vector<int> input)
-{
-	bool	isUnpaired;
-	int	unpaired = 0;
-	isUnpaired = (input.size() % 2 != 0);
-	if (isUnpaired)
-	{
-		unpaired = input.back();
-		input.pop_back();
-	}
-	std::vector<int> smalls;
-	std::vector<int> bigs;
-	for (size_t i = 0;i < input.size(); i++)
-	{
-		if (input[i] < input[i + 1])
-		{
-			smalls.push_back(input[i]);
-			bigs.push_back(input[i + 1]);
-		}
-		else
-		{
-			smalls.push_back(input[i + 1]);
-			bigs.push_back(input[i]);
-		}
-	}
 }
 
 void	PmergeMe::sortDeq(void)
 {
-	double start;
-	double end;
-	start = getTime();
+	double	start = getTime();
 	_deqResult = fordJohnsonDeq(_deqResult);
-	end = getTime();
+	double	end = getTime();
 	_timeDeq = end - start;
 }
 
 void	PmergeMe::printVec(void)
 {
-	std::vector<int>::iterator num;
 	std::cout << "\033[1;37m";
-	for (num = _vecResult.begin(); num != _vecResult.end(); ++num)
+	for (std::vector<int>::iterator num = _vecResult.begin(); num != _vecResult.end(); ++num)
 	{
 		std::cout << *num;
 		if (num + 1 != _vecResult.end())
@@ -129,9 +288,8 @@ void	PmergeMe::printVec(void)
 
 void	PmergeMe::printDeq(void)
 {
-	std::deque<int>::iterator num;
 	std::cout << "\033[1;37m";
-	for (num = _deqResult.begin(); num != _deqResult.end(); ++num)
+	for (std::deque<int>::iterator num = _deqResult.begin(); num != _deqResult.end(); ++num)
 	{
 		std::cout << *num;
 		if (num + 1 != _deqResult.end())
@@ -140,18 +298,11 @@ void	PmergeMe::printDeq(void)
 	std::cout << "\033[0m" << std::endl;
 }
 
-static double getTime(void)
-{
-	struct timeval tv;
-	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000000.0 + tv.tv_usec);
-}
-
 void	PmergeMe::printTime(void)
 {
 	std::cout << std::fixed << std::setprecision(5);
-	std::cout << "\033[0;33mTime to process a range of \033[0;37m" << _vecResult.size() << "\033[0;33m elements with std::vector : \033[0m";
-	std::cout << _timeVec << " us" << std::endl;
-	std::cout << "\033[0;33mTime to process a range of \033[0;37m" << _vecResult.size() << "\033[0;33m elements with std::deque  : \033[0m";
-	std::cout << _timeDeq << " us" << std::endl;
+	std::cout << "\033[0;33mTime to process a range of \033[0;37m" << _vecResult.size()
+		<< "\033[0;33m elements with std::vector : \033[0m" << _timeVec << " us" << std::endl;
+	std::cout << "\033[0;33mTime to process a range of \033[0;37m" << _deqResult.size()
+		<< "\033[0;33m elements with std::deque  : \033[0m" << _timeDeq << " us" << std::endl;
 }

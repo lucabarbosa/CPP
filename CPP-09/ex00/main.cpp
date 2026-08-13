@@ -6,7 +6,7 @@
 /*   By: lbento <lbento@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 00:49:35 by lbento            #+#    #+#             */
-/*   Updated: 2026/07/13 22:49:56 by lbento           ###   ########.fr       */
+/*   Updated: 2026/08/13 11:35:24 by lbento           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int   main(int argc, char **argv)
 	if (argc != 2)
 	{
 		std::cerr << "\033[0;31mExpected just one argument.\033[0m" << std::endl;
-		std::cerr << "\033[0;31mUse ./btc <file>\033[0m" << std::endl;
+		std::cerr << "\033[0;31mUse ./btc <input file>\033[0m" << std::endl;
 		return (1);
 	}
 	{
