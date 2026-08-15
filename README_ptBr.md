@@ -16,6 +16,8 @@ pensado para consulta rápida.
 > no navegador — ele traz explicações didáticas, trechos de código e links
 > para referências externas (cppreference, etc).
 
+![Gameplay](c++_guide.png)
+
 ---
 
 ## Sumário

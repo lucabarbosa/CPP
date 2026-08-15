@@ -16,6 +16,8 @@ functions/classes of each module, intended for quick reference.
 > in your browser — it includes didactic explanations, code snippets, and
 > links to external references (cppreference, etc).
 
+![Gameplay](c++_guide.png)
+
 ---
 
 ## Table of Contents
