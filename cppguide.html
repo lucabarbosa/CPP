@@ -1,0 +1,1070 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>C++ Field Notes</title>
+<meta name="description" content="Guia de consulta para os módulos de C++ da 42 — conceitos, funções-chave e exemplos de uso por módulo." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%96%A5%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+<style>
+  /* ============================================================
+     Tokens
+     ============================================================ */
+  :root{
+    --bg:            #f3f4f7;
+    --surface:       #ffffff;
+    --surface-2:     #eceef3;
+    --ink:           #1b2430;
+    --ink-dim:       #55606f;
+    --ink-faint:     #8892a1;
+    --border:        rgba(27,36,48,0.12);
+    --border-strong: rgba(27,36,48,0.22);
+
+    --accent:        #0f5fa8;   /* cpp-blue, "pattern" */
+    --accent-ink:    #ffffff;
+    --accent-tint:   rgba(15,95,168,0.08);
+
+    --good:          #1a7f4b;   /* GREEN — build ok / expected output */
+    --good-tint:     rgba(26,127,75,0.09);
+    --warn:          #a5680a;   /* YELLOW — atenção / boa prática */
+    --warn-tint:     rgba(165,104,10,0.10);
+    --bad:           #c0392b;   /* RED — armadilha / erro comum */
+    --bad-tint:      rgba(192,57,43,0.09);
+
+    --code-bg:       #0f1420;
+    --code-ink:      #dbe4f0;
+    --code-comment:  #7f97b8;
+    --code-key:      #6bb3ec;
+    --code-str:      #8fd19e;
+    --code-type:     #e0a339;
+
+    --font-mono: ui-monospace, "JetBrains Mono", "Fira Code", "Cascadia Code",
+                 "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+    --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                 Roboto, "Helvetica Neue", Arial, sans-serif;
+
+    --radius: 6px;
+    --shadow: 0 1px 2px rgba(20,26,36,0.04), 0 8px 24px -12px rgba(20,26,36,0.18);
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:            #10141c;
+      --surface:       #171d28;
+      --surface-2:     #1d2431;
+      --ink:           #e7ecf3;
+      --ink-dim:       #9aa6b8;
+      --ink-faint:     #6b7788;
+      --border:        rgba(231,236,243,0.10);
+      --border-strong: rgba(231,236,243,0.20);
+
+      --accent:        #6bb3ec;
+      --accent-ink:    #08131e;
+      --accent-tint:   rgba(107,179,236,0.10);
+
+      --good:          #56c98d;
+      --good-tint:     rgba(86,201,141,0.10);
+      --warn:          #e0a339;
+      --warn-tint:     rgba(224,163,57,0.10);
+      --bad:           #e0685c;
+      --bad-tint:      rgba(224,104,92,0.10);
+
+      --code-bg:       #0b0f17;
+      --code-ink:      #dbe4f0;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:            #10141c;
+    --surface:       #171d28;
+    --surface-2:     #1d2431;
+    --ink:           #e7ecf3;
+    --ink-dim:       #9aa6b8;
+    --ink-faint:     #6b7788;
+    --border:        rgba(231,236,243,0.10);
+    --border-strong: rgba(231,236,243,0.20);
+
+    --accent:        #6bb3ec;
+    --accent-ink:    #08131e;
+    --accent-tint:   rgba(107,179,236,0.10);
+
+    --good:          #56c98d;
+    --good-tint:     rgba(86,201,141,0.10);
+    --warn:          #e0a339;
+    --warn-tint:     rgba(224,163,57,0.10);
+    --bad:           #e0685c;
+    --bad-tint:      rgba(224,104,92,0.10);
+
+    --code-bg:       #0b0f17;
+    --code-ink:      #dbe4f0;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+  }
+
+  /* ============================================================
+     Reset & base
+     ============================================================ */
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ background:var(--bg); }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-sans);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{ font-family:var(--font-mono); font-weight:700; text-wrap:balance; margin:0; }
+  p{ margin:0 0 0.9em; max-width:66ch; }
+  a{ color:var(--accent); text-decoration-color:var(--border-strong); text-underline-offset:3px; }
+  a:hover{ text-decoration-color:currentColor; }
+  a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible{
+    outline:2px solid var(--accent); outline-offset:2px; border-radius:2px;
+  }
+  code{ font-family:var(--font-mono); font-size:0.92em; }
+  ::selection{ background:var(--accent-tint); }
+
+  /* ============================================================
+     Shell layout
+     ============================================================ */
+  .shell{
+    max-width:1280px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:260px minmax(0,1fr);
+    gap:0;
+  }
+
+  /* ---- top bar ---- */
+  .topbar{
+    position:sticky; top:0; z-index:20;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:1rem;
+    padding:0.85rem 1.25rem;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  .topbar .brand{
+    font-family:var(--font-mono); font-weight:700; font-size:0.95rem;
+    display:flex; align-items:baseline; gap:0.5rem;
+  }
+  .topbar .brand small{ font-weight:400; color:var(--ink-faint); font-size:0.78rem; }
+  .topbar .meta{ display:flex; align-items:center; gap:0.6rem; }
+  .badge{
+    font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.02em;
+    padding:0.25em 0.55em; border-radius:999px;
+    border:1px solid var(--border-strong); color:var(--ink-dim);
+    white-space:nowrap;
+  }
+  .topbar a.repo-link{
+    font-size:0.82rem; color:var(--ink-dim); text-decoration:none;
+    border:1px solid var(--border-strong); border-radius:999px; padding:0.3em 0.75em;
+  }
+  .topbar a.repo-link:hover{ color:var(--accent); border-color:var(--accent); }
+
+  .nav-toggle{ display:none; }
+  .nav-toggle-label{ display:none; }
+
+  /* ---- sidebar / TOC ---- */
+  .toc{
+    align-self:start;
+    position:sticky; top:56px;
+    max-height:calc(100vh - 56px);
+    overflow-y:auto;
+    padding:1.25rem 0.75rem 2rem 1.25rem;
+    border-right:1px solid var(--border);
+  }
+  .toc h2{
+    font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--ink-faint); margin-bottom:0.75rem; font-weight:600;
+  }
+  .toc ol{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:0.1rem; }
+  .toc a{
+    display:flex; align-items:baseline; gap:0.5rem;
+    text-decoration:none; color:var(--ink-dim);
+    font-family:var(--font-mono); font-size:0.86rem;
+    padding:0.4rem 0.5rem; border-radius:var(--radius);
+    border-left:2px solid transparent;
+  }
+  .toc a .n{ color:var(--ink-faint); font-size:0.78rem; }
+  .toc a:hover{ background:var(--surface-2); color:var(--ink); }
+  .toc a.active{
+    color:var(--accent); border-left-color:var(--accent); background:var(--accent-tint);
+    font-weight:600;
+  }
+  .toc .toc-foot{
+    margin-top:1.25rem; padding-top:1rem; border-top:1px solid var(--border);
+    font-size:0.78rem; color:var(--ink-faint); line-height:1.5;
+  }
+  .toc .toc-foot a{ font-family:var(--font-sans); color:var(--ink-dim); }
+
+  /* ---- main content ---- */
+  main{ min-width:0; padding:0 0 5rem; }
+
+  .hero{
+    padding:3rem 2.5rem 2rem;
+    border-bottom:1px solid var(--border);
+  }
+  .hero .eyebrow{
+    font-family:var(--font-mono); font-size:0.78rem; letter-spacing:0.06em;
+    color:var(--accent); text-transform:uppercase; margin-bottom:0.9rem;
+    display:flex; align-items:center; gap:0.6rem;
+  }
+  .hero .eyebrow::before{ content:""; width:1.4rem; height:1px; background:var(--accent); display:inline-block; }
+  .hero h1{ font-size:clamp(1.9rem, 3.2vw, 2.6rem); line-height:1.15; margin-bottom:0.9rem; }
+  .hero p.lead{
+    max-width:62ch; color:var(--ink-dim); font-size:1.05rem; margin-bottom:1.25rem;
+  }
+  .hero .keys{
+    display:flex; flex-wrap:wrap; gap:0.5rem;
+    font-family:var(--font-mono); font-size:0.78rem;
+  }
+  .hero .keys span{
+    border:1px solid var(--border-strong); border-radius:var(--radius);
+    padding:0.3em 0.6em; color:var(--ink-dim);
+  }
+
+  section.module{
+    padding:2.75rem 2.5rem;
+    border-bottom:1px solid var(--border);
+    scroll-margin-top:64px;
+  }
+  section.module:nth-of-type(even){ background:color-mix(in srgb, var(--surface) 55%, transparent); }
+
+  .banner{
+    font-family:var(--font-mono);
+    color:var(--ink-faint);
+    font-size:0.86rem;
+    margin:0 0 0.9rem;
+    white-space:pre-wrap;
+  }
+  .module h2.title{
+    font-size:1.5rem; margin-bottom:0.6rem; color:var(--ink);
+    display:flex; flex-wrap:wrap; align-items:baseline; gap:0.6rem;
+  }
+  .module h2.title .id{ color:var(--accent); }
+  .module p.concept{ color:var(--ink-dim); font-size:1rem; margin-bottom:1.6rem; }
+  .module p.concept strong{ color:var(--ink); font-weight:600; }
+
+  h3.sub{
+    font-family:var(--font-mono); font-size:0.78rem; letter-spacing:0.07em;
+    text-transform:uppercase; color:var(--ink-faint); margin:1.8rem 0 0.75rem;
+  }
+
+  /* ---- exercise table ---- */
+  .table-wrap{ overflow-x:auto; border:1px solid var(--border); border-radius:var(--radius); }
+  table.ex-table{ border-collapse:collapse; width:100%; min-width:480px; font-size:0.92rem; }
+  table.ex-table th, table.ex-table td{
+    text-align:left; padding:0.55rem 0.9rem; border-bottom:1px solid var(--border);
+    vertical-align:top;
+  }
+  table.ex-table thead th{
+    font-family:var(--font-mono); font-size:0.72rem; text-transform:uppercase;
+    letter-spacing:0.05em; color:var(--ink-faint); background:var(--surface-2);
+  }
+  table.ex-table tbody tr:last-child td{ border-bottom:none; }
+  table.ex-table td.ex-id{ font-family:var(--font-mono); color:var(--accent); white-space:nowrap; }
+  table.ex-table tbody tr:hover{ background:var(--accent-tint); }
+
+  /* ---- snippet callouts ---- */
+  .snippets{ display:flex; flex-direction:column; gap:1.1rem; margin-top:1rem; }
+  .snippet{
+    border:1px solid var(--border); border-left:3px solid var(--accent);
+    border-radius:var(--radius); background:var(--surface); box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .snippet.tip{ border-left-color:var(--warn); }
+  .snippet.pitfall{ border-left-color:var(--bad); }
+  .snippet.output{ border-left-color:var(--good); }
+
+  .snippet-label{
+    display:flex; align-items:center; gap:0.5rem;
+    font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.08em;
+    text-transform:uppercase; padding:0.6rem 1rem 0; color:var(--accent);
+  }
+  .snippet.tip .snippet-label{ color:var(--warn); }
+  .snippet.pitfall .snippet-label{ color:var(--bad); }
+  .snippet.output .snippet-label{ color:var(--good); }
+
+  .snippet pre{
+    margin:0.6rem 0 0; padding:1rem; overflow-x:auto;
+    background:var(--code-bg); color:var(--code-ink);
+    font-size:0.86rem; line-height:1.55;
+  }
+  .snippet pre code{ font-family:var(--font-mono); }
+  .tok-c{ color:var(--code-comment); font-style:italic; }
+  .tok-k{ color:var(--code-key); }
+  .tok-s{ color:var(--code-str); }
+  .tok-t{ color:var(--code-type); }
+
+  .snippet-note{ padding:0.85rem 1rem 1rem; color:var(--ink-dim); font-size:0.92rem; margin:0; max-width:none; }
+  .snippet-note code{ color:var(--ink); background:var(--surface-2); padding:0.05em 0.35em; border-radius:4px; }
+
+  /* ---- refs / footer per module ---- */
+  .refs{
+    margin-top:1.4rem; display:flex; flex-wrap:wrap; align-items:center; gap:0.6rem 1rem;
+    font-size:0.86rem; color:var(--ink-faint);
+  }
+  .refs .refs-label{ font-family:var(--font-mono); text-transform:uppercase; font-size:0.7rem; letter-spacing:0.06em; }
+  .refs a{ white-space:nowrap; }
+  .repo-path{
+    display:inline-flex; align-items:center; gap:0.4em;
+    font-family:var(--font-mono); font-size:0.86rem; color:var(--ink-dim);
+    background:var(--surface-2); border:1px solid var(--border); border-radius:999px;
+    padding:0.2em 0.75em; text-decoration:none; margin-top:1rem;
+  }
+  .repo-path:hover{ color:var(--accent); border-color:var(--accent); }
+
+  /* ---- final footer ---- */
+  footer.page-foot{
+    padding:2.5rem; text-align:center; color:var(--ink-faint); font-size:0.86rem;
+  }
+  footer.page-foot a{ color:var(--ink-dim); }
+
+  /* ============================================================
+     Responsive
+     ============================================================ */
+  @media (max-width:640px){
+    .topbar{ flex-wrap:wrap; row-gap:0.6rem; }
+    .topbar .brand small{ display:block; }
+    .topbar .meta{ margin-left:auto; }
+  }
+  @media (max-width:900px){
+    .shell{ grid-template-columns:1fr; }
+    .nav-toggle-label{
+      display:inline-flex; align-items:center; gap:0.4em;
+      font-family:var(--font-mono); font-size:0.82rem; color:var(--ink-dim);
+      border:1px solid var(--border-strong); border-radius:999px; padding:0.35em 0.85em;
+      cursor:pointer; user-select:none;
+    }
+    .toc{
+      position:static; max-height:0; overflow:hidden; padding-top:0; padding-bottom:0;
+      border-right:none; border-bottom:1px solid var(--border);
+      transition:max-height 0.25s ease;
+    }
+    .nav-toggle:checked ~ .shell .toc,
+    .nav-toggle:checked + .toc{ max-height:70vh; padding:1rem 1rem 1.5rem; }
+    .hero, section.module{ padding-left:1.25rem; padding-right:1.25rem; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .toc{ transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<input type="checkbox" id="navToggle" class="nav-toggle" />
+
+<div class="topbar">
+  <div class="brand">C++ Field Notes <small>· 42 São Paulo</small></div>
+  <div class="meta">
+    <label for="navToggle" class="nav-toggle-label">☰ Sumário</label>
+    <span class="badge">c++98</span>
+    <a class="repo-link" href="README.md">← README</a>
+  </div>
+</div>
+
+<div class="shell">
+  <aside class="toc" id="toc">
+    <h2>Módulos</h2>
+    <ol>
+      <li><a href="#m00"><span class="n">00</span> Classes &amp; Static</a></li>
+      <li><a href="#m01"><span class="n">01</span> Memória &amp; Ponteiros</a></li>
+      <li><a href="#m02"><span class="n">02</span> Operadores</a></li>
+      <li><a href="#m03"><span class="n">03</span> Herança</a></li>
+      <li><a href="#m04"><span class="n">04</span> Polimorfismo</a></li>
+      <li><a href="#m05"><span class="n">05</span> Exceções</a></li>
+      <li><a href="#m06"><span class="n">06</span> Casting</a></li>
+      <li><a href="#m07"><span class="n">07</span> Templates</a></li>
+      <li><a href="#m08"><span class="n">08</span> STL Containers</a></li>
+      <li><a href="#m09"><span class="n">09</span> STL Avançada</a></li>
+    </ol>
+    <div class="toc-foot">
+      Compilado com <code>-Wall -Wextra -Werror -std=c++98</code>.<br />
+      Cada bloco de código indica <strong>como</strong> o recurso é usado nos
+      exercícios — veja o link do módulo para o código completo.
+    </div>
+  </aside>
+
+  <main>
+    <header class="hero">
+      <div class="eyebrow">guia de estudo · não oficial</div>
+      <h1>Da stack ao <code>std::map</code>: C++ módulo a módulo.</h1>
+      <p class="lead">
+        Referência rápida para quem está estudando (ou revisando) o tronco
+        comum de C++ da 42. Cada módulo abaixo resume o conceito central,
+        mostra como as funções e classes mais importantes são usadas na
+        prática e aponta onde ler mais.
+      </p>
+      <div class="keys">
+        <span><span style="color:var(--accent)">■</span> padrão de uso</span>
+        <span><span style="color:var(--warn)">■</span> boa prática</span>
+        <span><span style="color:var(--bad)">■</span> armadilha comum</span>
+        <span><span style="color:var(--good)">■</span> saída esperada</span>
+      </div>
+    </header>
+
+    <!-- ============================================================ CPP-00 -->
+    <section class="module" id="m00">
+      <pre class="banner">/* CPP-00 — Namespaces, Classes, Membros Estáticos, Arquivos */</pre>
+      <h2 class="title"><span class="id">00</span> Classes &amp; Membros Estáticos</h2>
+      <p class="concept">
+        Primeiro passo saindo do C: organizar dados e comportamento dentro de
+        uma <strong>classe</strong>, usar <code>std::string</code>/<code>iostream</code>
+        no lugar de <code>char*</code>/<code>printf</code>, e entender membros
+        <code>static</code> — dados e funções que pertencem à classe, não a
+        uma instância específica.
+      </p>
+
+      <div class="table-wrap">
+        <table class="ex-table">
+          <thead><tr><th>Ex.</th><th>Exercício</th><th>Nota</th></tr></thead>
+          <tbody>
+            <tr><td class="ex-id">ex00</td><td>Megaphone</td><td>argv, <code>std::string</code> para maiúsculas</td></tr>
+            <tr><td class="ex-id">ex01</td><td>PhoneBook</td><td>buffer estático de 8 <code>Contact</code></td></tr>
+            <tr><td class="ex-id">ex02</td><td>Account</td><td>membros/métodos <code>static</code> compartilhados</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Como é usado</h3>
+      <div class="snippets">
+        <div class="snippet">
+          <div class="snippet-label">padrão · membro estático compartilhado</div>
+          <pre><code><span class="tok-k">class</span> Account
+{
+    <span class="tok-k">private</span>:
+        <span class="tok-k">static</span> <span class="tok-t">int</span> _nbAccounts;   <span class="tok-c">// uma cópia para TODAS as instâncias</span>
+        <span class="tok-t">int</span> _accountIndex;
+
+    <span class="tok-k">public</span>:
+        <span class="tok-k">static</span> <span class="tok-t">int</span> getNbAccounts( <span class="tok-t">void</span> ); <span class="tok-c">// não precisa de objeto</span>
+};
+
+<span class="tok-c">// fora da classe: static precisa ser definido uma única vez</span>
+<span class="tok-t">int</span> Account::_nbAccounts = <span class="tok-t">0</span>;</code></pre>
+          <p class="snippet-note">
+            Chama-se sem instância: <code>Account::getNbAccounts()</code>. É assim
+            que <code>PhoneBook</code> guarda seus 8 contatos num array de
+            tamanho fixo dentro da própria classe.
+          </p>
+        </div>
+      </div>
+
+      <div class="refs">
+        <span class="refs-label">Leitura</span>
+        <a href="https://en.cppreference.com/w/cpp/language/static" target="_blank" rel="noopener">cppreference — static members</a>
+        <a href="https://en.cppreference.com/w/cpp/string/basic_string" target="_blank" rel="noopener">cppreference — std::string</a>
+      </div>
+      <a class="repo-path" href="CPP-00/">📁 CPP-00/</a>
+    </section>
+
+    <!-- ============================================================ CPP-01 -->
+    <section class="module" id="m01">
+      <pre class="banner">/* CPP-01 — Memória, Ponteiros e Referências */</pre>
+      <h2 class="title"><span class="id">01</span> Memória &amp; Ponteiros</h2>
+      <p class="concept">
+        A base de tudo que vem depois: quando um objeto vive na
+        <strong>stack</strong> (some sozinho) e quando ele vive no
+        <strong>heap</strong> (você é responsável por liberar), e a diferença
+        prática entre um <strong>ponteiro</strong> (pode ser nulo, pode
+        mudar de alvo) e uma <strong>referência</strong> (sempre válida,
+        vinculada no momento da criação).
+      </p>
+
+      <div class="table-wrap">
+        <table class="ex-table">
+          <thead><tr><th>Ex.</th><th>Exercício</th><th>Nota</th></tr></thead>
+          <tbody>
+            <tr><td class="ex-id">ex00</td><td>Zombie</td><td><code>newZombie</code> (heap) vs <code>randomChump</code> (stack)</td></tr>
+            <tr><td class="ex-id">ex01</td><td>Zombie Horde</td><td>array dinâmico de objetos</td></tr>
+            <tr><td class="ex-id">ex02</td><td>HI THIS IS J</td><td>ponteiro e referência da mesma variável</td></tr>
+            <tr><td class="ex-id">ex03</td><td>Weapon/Human</td><td>atributo por referência vs por ponteiro</td></tr>
+            <tr><td class="ex-id">ex04</td><td>Sed is for losers</td><td><code>ifstream</code>/<code>ofstream</code>, <code>string::find</code></td></tr>
+            <tr><td class="ex-id">ex05</td><td>Harl 2.0</td><td>ponteiro para método (function pointer de membro)</td></tr>
+            <tr><td class="ex-id">ex06</td><td>Harl Filter</td><td><code>switch</code> com fallthrough por nível de log</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Como é usado</h3>
+      <div class="snippets">
+        <div class="snippet">
+          <div class="snippet-label">padrão · stack vs heap</div>
+          <pre><code>Zombie randomChump( std::string name )
+{
+    Zombie z( name );  <span class="tok-c">// vive na stack: destruída ao sair do escopo</span>
+    z.announce();
+    <span class="tok-k">return</span> z;         <span class="tok-c">// copiada de volta para o chamador</span>
+}
+
+Zombie *newZombie( std::string name )
+{
+    <span class="tok-k">return</span> <span class="tok-k">new</span> Zombie( name ); <span class="tok-c">// vive no heap: chamador deve dar delete</span>
+}</code></pre>
+          <p class="snippet-note">
+            Regra prática: se você escreveu <code>new</code>, alguém precisa
+            escrever <code>delete</code> — em C++98, sem <em>smart pointers</em>
+            na caixa de ferramentas ainda, isso é 100% manual.
+          </p>
+        </div>
+        <div class="snippet pitfall">
+          <div class="snippet-label">armadilha · ponteiro para método</div>
+          <pre><code><span class="tok-t">void</span> (Harl::*fn)( <span class="tok-t">void</span> ) = &amp;Harl::debug; <span class="tok-c">// sintaxe estranha, mas é isso mesmo</span>
+(<span class="tok-k">this</span>-&gt;*fn)();                          <span class="tok-c">// invoca através do objeto</span></code></pre>
+          <p class="snippet-note">
+            Ponteiro para membro não é um endereço de memória comum — ele
+            só faz sentido junto de um objeto (<code>this-&gt;*fn</code> ou
+            <code>obj.*fn</code>). É assim que o Harl escolhe qual método
+            chamar a partir de uma <code>string</code>.
+          </p>
+        </div>
+      </div>
+
+      <div class="refs">
+        <span class="refs-label">Leitura</span>
+        <a href="https://en.cppreference.com/w/cpp/language/new" target="_blank" rel="noopener">cppreference — new expression</a>
+        <a href="https://en.cppreference.com/w/cpp/language/reference" target="_blank" rel="noopener">cppreference — references</a>
+      </div>
+      <a class="repo-path" href="CPP-01/">📁 CPP-01/</a>
+    </section>
+
+    <!-- ============================================================ CPP-02 -->
+    <section class="module" id="m02">
+      <pre class="banner">/* CPP-02 — Sobrecarga de Operadores (Ad-hoc Polymorphism) */</pre>
+      <h2 class="title"><span class="id">02</span> Sobrecarga de Operadores</h2>
+      <p class="concept">
+        A classe <code>Fixed</code> (ponto fixo, armazenado como
+        <code>int</code> com bits fracionários) é o pretexto para dominar a
+        <strong>Orthodox Canonical Form</strong> — construtor padrão, construtor
+        de cópia, <code>operator=</code> e destrutor — e para ensinar um tipo
+        a se comportar como um número nativo via sobrecarga de operadores.
+      </p>
+
+      <div class="table-wrap">
+        <table class="ex-table">
+          <thead><tr><th>Ex.</th><th>Exercício</th><th>Nota</th></tr></thead>
+          <tbody>
+            <tr><td class="ex-id">ex00</td><td>Fixed — form</td><td>Orthodox Canonical Form básica</td></tr>
+            <tr><td class="ex-id">ex01</td><td>Fixed — conversões</td><td><code>int</code>/<code>float</code> ↔ ponto fixo</td></tr>
+            <tr><td class="ex-id">ex02</td><td>Fixed — operadores</td><td>aritméticos, comparação, <code>++</code>/<code>--</code>, <code>min</code>/<code>max</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Como é usado</h3>
+      <div class="snippets">
+        <div class="snippet">
+          <div class="snippet-label">padrão · Orthodox Canonical Form</div>
+          <pre><code><span class="tok-k">class</span> Fixed
+{
+    <span class="tok-k">public</span>:
+        Fixed( <span class="tok-t">void</span> );                       <span class="tok-c">// construtor padrão</span>
+        Fixed( <span class="tok-k">const</span> Fixed &amp;other );        <span class="tok-c">// construtor de cópia</span>
+        Fixed &amp;<span class="tok-k">operator</span>=( <span class="tok-k">const</span> Fixed &amp;other ); <span class="tok-c">// atribuição</span>
+        ~Fixed( <span class="tok-t">void</span> );                      <span class="tok-c">// destrutor</span>
+};
+
+Fixed Fixed::<span class="tok-k">operator</span>+( <span class="tok-k">const</span> Fixed &amp;rhs ) <span class="tok-k">const</span>
+{
+    <span class="tok-k">return</span> Fixed::fromRawBits( <span class="tok-k">this</span>-&gt;getRawBits() + rhs.getRawBits() );
+}</code></pre>
+          <p class="snippet-note">
+            Implementar essas quatro funções mesmo quando o compilador geraria
+            versões equivalentes é o exercício em si — é o formalismo que o
+            C++ herda de gerenciar recursos manualmente, como o C.
+          </p>
+        </div>
+        <div class="snippet tip">
+          <div class="snippet-label">boa prática · armazenar em ponto fixo</div>
+          <pre><code>_fixedNum = roundf( floatValue * ( <span class="tok-t">1</span> &lt;&lt; _fractionalBits ) ); <span class="tok-c">// float -> fixed</span>
+<span class="tok-t">float</span> Fixed::toFloat( <span class="tok-t">void</span> ) <span class="tok-k">const</span>
+{ <span class="tok-k">return</span> ( ( <span class="tok-t">float</span> )_fixedNum / ( <span class="tok-t">1</span> &lt;&lt; _fractionalBits ) ); } <span class="tok-c">// fixed -> float</span></code></pre>
+          <p class="snippet-note">
+            O deslocamento de bits (<code>&lt;&lt;</code>) reserva os últimos
+            <em>N</em> bits do <code>int</code> para a parte fracionária —
+            a mesma técnica usada em hardware sem FPU.
+          </p>
+        </div>
+      </div>
+
+      <div class="refs">
+        <span class="refs-label">Leitura</span>
+        <a href="https://en.cppreference.com/w/cpp/language/operators" target="_blank" rel="noopener">cppreference — operator overloading</a>
+      </div>
+      <a class="repo-path" href="CPP-02/">📁 CPP-02/</a>
+    </section>
+
+    <!-- ============================================================ CPP-03 -->
+    <section class="module" id="m03">
+      <pre class="banner">/* CPP-03 — Herança */</pre>
+      <h2 class="title"><span class="id">03</span> Herança</h2>
+      <p class="concept">
+        A hierarquia <code>ClapTrap → ScavTrap / FragTrap</code> ensina como
+        classes derivadas reaproveitam atributos e métodos da base, como a
+        ordem de construção/destruição funciona (base primeiro, derivada por
+        último — e o inverso ao destruir) e a diferença entre
+        <code>protected</code> e <code>private</code>.
+      </p>
+
+      <div class="table-wrap">
+        <table class="ex-table">
+          <thead><tr><th>Ex.</th><th>Exercício</th><th>Nota</th></tr></thead>
+          <tbody>
+            <tr><td class="ex-id">ex00</td><td>ClapTrap</td><td>classe base: HP, energia, dano</td></tr>
+            <tr><td class="ex-id">ex01</td><td>ScavTrap</td><td>herda + <code>guardGate()</code></td></tr>
+            <tr><td class="ex-id">ex02</td><td>FragTrap</td><td>segunda derivada + <code>highFivesGuys()</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Como é usado</h3>
+      <div class="snippets">
+        <div class="snippet">
+          <div class="snippet-label">padrão · construtor encadeado</div>
+          <pre><code><span class="tok-k">class</span> ScavTrap : <span class="tok-k">public</span> ClapTrap
+{
+    <span class="tok-k">public</span>:
+        ScavTrap( std::string name );
+};
+
+ScavTrap::ScavTrap( std::string name ) : ClapTrap( name ) <span class="tok-c">// chama o construtor da base primeiro</span>
+{
+    _hitPoints = <span class="tok-t">100</span>;   <span class="tok-c">// depois ajusta os próprios atributos</span>
+    _energyPoints = <span class="tok-t">50</span>;
+    _attackDamage = <span class="tok-t">20</span>;
+}</code></pre>
+          <p class="snippet-note">
+            Sem a lista de inicialização (<code>: ClapTrap(name)</code>), o
+            construtor padrão da base seria chamado implicitamente antes do
+            corpo do construtor derivado — não há como "pular" a base.
+          </p>
+        </div>
+      </div>
+
+      <div class="refs">
+        <span class="refs-label">Leitura</span>
+        <a href="https://en.cppreference.com/w/cpp/language/derived_class" target="_blank" rel="noopener">cppreference — derived classes</a>
+      </div>
+      <a class="repo-path" href="CPP-03/">📁 CPP-03/</a>
+    </section>
+
+    <!-- ============================================================ CPP-04 -->
+    <section class="module" id="m04">
+      <pre class="banner">/* CPP-04 — Polimorfismo, Classes Abstratas e Interfaces */</pre>
+      <h2 class="title"><span class="id">04</span> Polimorfismo</h2>
+      <p class="concept">
+        Com <code>Animal → Dog / Cat</code>: funções <code>virtual</code>
+        fazem o método <em>certo</em> ser chamado mesmo através de um
+        ponteiro para a classe base (binding dinâmico), destrutor virtual
+        evita vazar memória ao deletar por ponteiro base, e
+        <code>= 0</code> cria classes abstratas que não podem ser
+        instanciadas.
+      </p>
+
+      <div class="table-wrap">
+        <table class="ex-table">
+          <thead><tr><th>Ex.</th><th>Exercício</th><th>Nota</th></tr></thead>
+          <tbody>
+            <tr><td class="ex-id">ex00</td><td>WrongAnimal vs Animal</td><td>o bug de não usar <code>virtual</code></td></tr>
+            <tr><td class="ex-id">ex01</td><td>+ Brain</td><td>composição, deep copy no construtor de cópia</td></tr>
+            <tr><td class="ex-id">ex02</td><td>Animal abstrata</td><td><code>virtual makeSound() = 0;</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Como é usado</h3>
+      <div class="snippets">
+        <div class="snippet pitfall">
+          <div class="snippet-label">armadilha · destrutor não-virtual</div>
+          <pre><code>Animal *animal = <span class="tok-k">new</span> Dog();
+<span class="tok-k">delete</span> animal; <span class="tok-c">// se ~Animal() NÃO for virtual, ~Dog() nunca roda: leak</span></code></pre>
+          <p class="snippet-note">
+            Sempre que uma classe tem função <code>virtual</code> e pode ser
+            deletada por um ponteiro da base, o destrutor precisa ser
+            <code>virtual</code> também.
+          </p>
+        </div>
+        <div class="snippet">
+          <div class="snippet-label">padrão · classe abstrata</div>
+          <pre><code><span class="tok-k">class</span> Animal
+{
+    <span class="tok-k">public</span>:
+        <span class="tok-k">virtual</span> <span class="tok-t">void</span> makeSound( <span class="tok-t">void</span> ) <span class="tok-k">const</span> = <span class="tok-t">0</span>; <span class="tok-c">// pure virtual: torna Animal abstrata</span>
+        <span class="tok-k">virtual</span> ~Animal( <span class="tok-t">void</span> );
+};
+<span class="tok-c">// Animal a; -> erro de compilação: não é possível instanciar</span></code></pre>
+          <p class="snippet-note">
+            Uma classe abstrata só existe para ser herdada — ela define o
+            <em>contrato</em> (a interface) que <code>Dog</code> e
+            <code>Cat</code> são obrigados a implementar.
+          </p>
+        </div>
+      </div>
+
+      <div class="refs">
+        <span class="refs-label">Leitura</span>
+        <a href="https://en.cppreference.com/w/cpp/language/virtual" target="_blank" rel="noopener">cppreference — virtual function</a>
+        <a href="https://en.cppreference.com/w/cpp/language/abstract_class" target="_blank" rel="noopener">cppreference — abstract class</a>
+      </div>
+      <a class="repo-path" href="CPP-04/">📁 CPP-04/</a>
+    </section>
+
+    <!-- ============================================================ CPP-05 -->
+    <section class="module" id="m05">
+      <pre class="banner">/* CPP-05 — Tratamento de Exceções */</pre>
+      <h2 class="title"><span class="id">05</span> Exceções</h2>
+      <p class="concept">
+        Um fluxo burocrático — <code>Bureaucrat</code> assina
+        <code>Form</code>s — usado como pretexto para exceções
+        personalizadas (herdando de <code>std::exception</code>), e para o
+        <code>Intern</code>, uma pequena fábrica que decide, em tempo de
+        execução, qual formulário concreto instanciar a partir de uma
+        <code>string</code>.
+      </p>
+
+      <div class="table-wrap">
+        <table class="ex-table">
+          <thead><tr><th>Ex.</th><th>Exercício</th><th>Nota</th></tr></thead>
+          <tbody>
+            <tr><td class="ex-id">ex00</td><td>Bureaucrat</td><td>exceções de grade inválida</td></tr>
+            <tr><td class="ex-id">ex01</td><td>Form</td><td>assinatura com validação de permissão</td></tr>
+            <tr><td class="ex-id">ex02</td><td>AForm + 3 formulários</td><td>ação polimórfica por formulário</td></tr>
+            <tr><td class="ex-id">ex03</td><td>Intern</td><td>fábrica: string → Form* correto</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Como é usado</h3>
+      <div class="snippets">
+        <div class="snippet">
+          <div class="snippet-label">padrão · exceção customizada</div>
+          <pre><code><span class="tok-k">class</span> Bureaucrat
+{
+    <span class="tok-k">public</span>:
+        <span class="tok-k">class</span> GradeTooHighException : <span class="tok-k">public</span> std::exception
+        {
+            <span class="tok-k">public</span>:
+                <span class="tok-k">const</span> <span class="tok-t">char</span> *what( <span class="tok-t">void</span> ) <span class="tok-k">const</span> <span class="tok-k">throw</span>() <span class="tok-k">override</span> <span class="tok-c">// (throw() = c++98 noexcept)</span>
+                { <span class="tok-k">return</span> ( <span class="tok-s">"Grade is too high"</span> ); }
+        };
+};
+
+<span class="tok-k">try</span> { bureaucrat.incrementGrade(); }
+<span class="tok-k">catch</span> ( <span class="tok-k">const</span> std::exception &amp;e ) { std::cout &lt;&lt; e.what() &lt;&lt; std::endl; }</code></pre>
+          <p class="snippet-note">
+            Capturar por <code>const&amp;</code> (nunca por valor) evita
+            <em>slicing</em> — perder a parte derivada do objeto ao copiá-lo
+            para o tipo base durante o <code>catch</code>.
+          </p>
+        </div>
+      </div>
+
+      <div class="refs">
+        <span class="refs-label">Leitura</span>
+        <a href="https://en.cppreference.com/w/cpp/error/exception" target="_blank" rel="noopener">cppreference — std::exception</a>
+        <a href="https://en.cppreference.com/w/cpp/language/try_catch" target="_blank" rel="noopener">cppreference — try/catch</a>
+      </div>
+      <a class="repo-path" href="CPP-05/">📁 CPP-05/</a>
+    </section>
+
+    <!-- ============================================================ CPP-06 -->
+    <section class="module" id="m06">
+      <pre class="banner">/* CPP-06 — Casting (Conversões de Tipo) */</pre>
+      <h2 class="title"><span class="id">06</span> Casting</h2>
+      <p class="concept">
+        Os quatro operadores de conversão do C++ substituem o
+        <code>(tipo)valor</code> do C, cada um com uma intenção clara:
+        <code>static_cast</code> (conversão segura entre tipos relacionados),
+        <code>dynamic_cast</code> (descobre o tipo real em tempo de
+        execução), <code>reinterpret_cast</code> (reinterpreta bits crus) e
+        <code>const_cast</code> (remove/adiciona <code>const</code>).
+      </p>
+
+      <div class="table-wrap">
+        <table class="ex-table">
+          <thead><tr><th>Ex.</th><th>Exercício</th><th>Nota</th></tr></thead>
+          <tbody>
+            <tr><td class="ex-id">ex00</td><td>ScalarConverter</td><td><code>char</code>/<code>int</code>/<code>float</code>/<code>double</code> via <code>static_cast</code></td></tr>
+            <tr><td class="ex-id">ex01</td><td>Serializer</td><td>ponteiro ↔ inteiro via <code>reinterpret_cast</code></td></tr>
+            <tr><td class="ex-id">ex02</td><td>Identify (A/B/C)</td><td>tipo real do objeto via <code>dynamic_cast</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Como é usado</h3>
+      <div class="snippets">
+        <div class="snippet">
+          <div class="snippet-label">padrão · dynamic_cast com ponteiro</div>
+          <pre><code>Base *p = generate();
+<span class="tok-k">if</span> ( dynamic_cast&lt;B *&gt;( p ) )      <span class="tok-c">// retorna NULL se não for B: nunca lança</span>
+    std::cout &lt;&lt; <span class="tok-s">"B"</span> &lt;&lt; std::endl;
+<span class="tok-k">else</span> <span class="tok-k">if</span> ( dynamic_cast&lt;A *&gt;( p ) )
+    std::cout &lt;&lt; <span class="tok-s">"A"</span> &lt;&lt; std::endl;</code></pre>
+          <p class="snippet-note">
+            Só funciona em classes <strong>polimórficas</strong> (com pelo
+            menos um método <code>virtual</code>) — é isso que exige a
+            <code>Base</code> ter um destrutor virtual mesmo vazio.
+          </p>
+        </div>
+        <div class="snippet pitfall">
+          <div class="snippet-label">armadilha · escolher o cast errado</div>
+          <pre><code><span class="tok-c">// referência: dynamic_cast falha lançando, não retornando NULL</span>
+<span class="tok-k">try</span> { B&amp; b = dynamic_cast&lt;B&amp;&gt;( *p ); }
+<span class="tok-k">catch</span> ( std::bad_cast&amp; ) { std::cout &lt;&lt; <span class="tok-s">"C"</span> &lt;&lt; std::endl; }</code></pre>
+          <p class="snippet-note">
+            Usar <code>reinterpret_cast</code> para "descer" na hierarquia
+            (downcast) é comportamento indefinido — ele não checa nada, apenas
+            reinterpreta bits.
+          </p>
+        </div>
+      </div>
+
+      <div class="refs">
+        <span class="refs-label">Leitura</span>
+        <a href="https://en.cppreference.com/w/cpp/language/dynamic_cast" target="_blank" rel="noopener">cppreference — dynamic_cast</a>
+        <a href="https://en.cppreference.com/w/cpp/language/static_cast" target="_blank" rel="noopener">cppreference — static_cast</a>
+      </div>
+      <a class="repo-path" href="CPP-06/">📁 CPP-06/</a>
+    </section>
+
+    <!-- ============================================================ CPP-07 -->
+    <section class="module" id="m07">
+      <pre class="banner">/* CPP-07 — Templates */</pre>
+      <h2 class="title"><span class="id">07</span> Templates</h2>
+      <p class="concept">
+        Programação genérica: escrever uma função ou classe
+        <strong>uma vez</strong> e deixar o compilador gerar versões para
+        cada tipo usado, em vez de duplicar código para <code>int</code>,
+        <code>float</code>, <code>std::string</code>, etc.
+      </p>
+
+      <div class="table-wrap">
+        <table class="ex-table">
+          <thead><tr><th>Ex.</th><th>Exercício</th><th>Nota</th></tr></thead>
+          <tbody>
+            <tr><td class="ex-id">ex00</td><td>whatever(a, b)</td><td><code>max</code>/<code>swap</code> genéricos</td></tr>
+            <tr><td class="ex-id">ex01</td><td>iter()</td><td>aplica uma função a cada elemento de um array genérico</td></tr>
+            <tr><td class="ex-id">ex02</td><td>Array&lt;T&gt;</td><td>classe template com <code>operator[]</code> seguro</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Como é usado</h3>
+      <div class="snippets">
+        <div class="snippet">
+          <div class="snippet-label">padrão · function template com callback</div>
+          <pre><code><span class="tok-k">template</span>&lt;<span class="tok-k">typename</span> T, <span class="tok-k">typename</span> F&gt;
+<span class="tok-t">void</span> iter( T *array, <span class="tok-k">const</span> <span class="tok-t">size_t</span> size, F function )
+{
+    <span class="tok-k">for</span> ( <span class="tok-t">size_t</span> i = <span class="tok-t">0</span>; i &lt; size; i++ )
+        function( array[i] ); <span class="tok-c">// F pode ser função, functor ou (em c++11+) lambda</span>
+}
+
+<span class="tok-t">int</span> nums[] = { <span class="tok-t">1</span>, <span class="tok-t">2</span>, <span class="tok-t">3</span> };
+iter( nums, <span class="tok-t">3</span>, printValue&lt;<span class="tok-t">int</span>&gt; ); <span class="tok-c">// T e F deduzidos automaticamente</span></code></pre>
+          <p class="snippet-note">
+            Templates são resolvidos em tempo de compilação — o código do
+            template precisa estar visível no <code>.hpp</code> (não em um
+            <code>.cpp</code> separado), por isso não há
+            <code>Array.cpp</code>.
+          </p>
+        </div>
+      </div>
+
+      <div class="refs">
+        <span class="refs-label">Leitura</span>
+        <a href="https://en.cppreference.com/w/cpp/language/templates" target="_blank" rel="noopener">cppreference — templates</a>
+      </div>
+      <a class="repo-path" href="CPP-07/">📁 CPP-07/</a>
+    </section>
+
+    <!-- ============================================================ CPP-08 -->
+    <section class="module" id="m08">
+      <pre class="banner">/* CPP-08 — Containers e Algoritmos da STL */</pre>
+      <h2 class="title"><span class="id">08</span> STL Containers</h2>
+      <p class="concept">
+        Primeiro contato com a Standard Template Library: containers
+        (<code>vector</code>, <code>list</code>, <code>stack</code>) e
+        algoritmos genéricos (<code>std::find</code>) que operam sobre
+        <strong>iteradores</strong> em vez de índices — o mesmo algoritmo
+        funciona em qualquer container que exponha <code>begin()</code>/<code>end()</code>.
+      </p>
+
+      <div class="table-wrap">
+        <table class="ex-table">
+          <thead><tr><th>Ex.</th><th>Exercício</th><th>Nota</th></tr></thead>
+          <tbody>
+            <tr><td class="ex-id">ex00</td><td>easyfind</td><td>template genérico sobre <code>std::find</code></td></tr>
+            <tr><td class="ex-id">ex01</td><td>Span</td><td>menor/maior <em>span</em> entre inteiros armazenados</td></tr>
+            <tr><td class="ex-id">ex02</td><td>MutantStack</td><td><code>std::stack</code> estendida para ser iterável</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Como é usado</h3>
+      <div class="snippets">
+        <div class="snippet">
+          <div class="snippet-label">padrão · algoritmo genérico sobre iteradores</div>
+          <pre><code><span class="tok-k">template</span>&lt;<span class="tok-k">typename</span> T&gt;
+<span class="tok-k">typename</span> T::iterator easyfind( T &amp;container, <span class="tok-k">const</span> <span class="tok-t">int</span> value )
+{
+    <span class="tok-k">typename</span> T::iterator result = std::find( container.begin(), container.end(), value );
+    <span class="tok-k">if</span> ( result == container.end() )
+        <span class="tok-k">throw</span> std::runtime_error( <span class="tok-s">"Value not found"</span> );
+    <span class="tok-k">return</span> ( result );
+}
+<span class="tok-c">// funciona tanto para std::vector&lt;int&gt; quanto std::list&lt;int&gt;, sem alterar nada</span></code></pre>
+          <p class="snippet-note">
+            <code>typename T::iterator</code> é necessário porque o
+            compilador não sabe, sem essa dica, que <code>iterator</code> é
+            um tipo e não um valor estático de <code>T</code>.
+          </p>
+        </div>
+        <div class="snippet tip">
+          <div class="snippet-label">boa prática · estender um container da STL</div>
+          <pre><code><span class="tok-k">template</span>&lt;<span class="tok-k">typename</span> T&gt;
+<span class="tok-k">class</span> MutantStack : <span class="tok-k">public</span> std::stack&lt;T&gt;
+{
+    <span class="tok-k">public</span>:
+        <span class="tok-k">typedef</span> <span class="tok-k">typename</span> std::stack&lt;T&gt;::container_type::iterator iterator;
+        iterator begin( <span class="tok-t">void</span> ) { <span class="tok-k">return</span> ( <span class="tok-k">this</span>-&gt;c.begin() ); } <span class="tok-c">// `c` é o container protegido do std::stack</span>
+        iterator end( <span class="tok-t">void</span> )   { <span class="tok-k">return</span> ( <span class="tok-k">this</span>-&gt;c.end() ); }
+};</code></pre>
+          <p class="snippet-note">
+            <code>std::stack</code> não expõe iteradores por padrão — o
+            "truque" é acessar o container subjacente protegido
+            (<code>this-&gt;c</code>) para adicionar iteração sem reescrever
+            a pilha do zero.
+          </p>
+        </div>
+      </div>
+
+      <div class="refs">
+        <span class="refs-label">Leitura</span>
+        <a href="https://en.cppreference.com/w/cpp/algorithm/find" target="_blank" rel="noopener">cppreference — std::find</a>
+        <a href="https://en.cppreference.com/w/cpp/container" target="_blank" rel="noopener">cppreference — containers</a>
+      </div>
+      <a class="repo-path" href="CPP-08/">📁 CPP-08/</a>
+    </section>
+
+    <!-- ============================================================ CPP-09 -->
+    <section class="module" id="m09">
+      <pre class="banner">/* CPP-09 — STL Avançada / Projeto Final */</pre>
+      <h2 class="title"><span class="id">09</span> STL Avançada</h2>
+      <p class="concept">
+        Três exercícios independentes que juntam parsing de entrada com
+        containers mais expressivos: <code>std::map</code> para busca
+        ordenada, <code>std::stack</code> para avaliar expressões, e um
+        algoritmo de ordenação clássico — <strong>merge-insertion sort
+        (Ford-Johnson)</strong> — implementado sobre dois containers
+        diferentes para comparar desempenho.
+      </p>
+
+      <div class="table-wrap">
+        <table class="ex-table">
+          <thead><tr><th>Ex.</th><th>Exercício</th><th>Nota</th></tr></thead>
+          <tbody>
+            <tr><td class="ex-id">ex00</td><td>BitcoinExchange</td><td><code>std::map</code> + <code>lower_bound</code> por data</td></tr>
+            <tr><td class="ex-id">ex01</td><td>RPN</td><td>notação polonesa reversa com <code>std::stack</code></td></tr>
+            <tr><td class="ex-id">ex02</td><td>PmergeMe</td><td>Ford-Johnson em dois containers, comparando tempo</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Como é usado</h3>
+      <div class="snippets">
+        <div class="snippet">
+          <div class="snippet-label">padrão · busca ordenada com std::map</div>
+          <pre><code>std::map&lt;std::string, <span class="tok-t">double</span>&gt; rates; <span class="tok-c">// data -> cotação, ordenado por chave</span>
+
+std::map&lt;std::string, <span class="tok-t">double</span>&gt;::iterator it = rates.lower_bound( date );
+<span class="tok-k">if</span> ( it == rates.end() || it-&gt;first != date )
+    --it; <span class="tok-c">// sem cotação exata: usa a data válida mais próxima anterior</span></code></pre>
+          <p class="snippet-note">
+            <code>lower_bound</code> encontra a primeira chave <em>não menor</em>
+            que a data pedida em <code>O(log n)</code> — essencial quando o
+            enunciado exige "a taxa mais próxima, sem ultrapassar a data".
+          </p>
+        </div>
+        <div class="snippet">
+          <div class="snippet-label">padrão · avaliação com pilha (RPN)</div>
+          <pre><code>std::stack&lt;<span class="tok-t">int</span>&gt; values;
+<span class="tok-k">for</span> ( token <span class="tok-k">in</span> tokens )
+{
+    <span class="tok-k">if</span> ( isNumber( token ) )
+        values.push( toInt( token ) );
+    <span class="tok-k">else</span> <span class="tok-c">// operador: consome os dois últimos, empilha o resultado</span>
+    {
+        <span class="tok-t">int</span> b = values.top(); values.pop();
+        <span class="tok-t">int</span> a = values.top(); values.pop();
+        values.push( apply( token, a, b ) );
+    }
+}</code></pre>
+          <p class="snippet-note">
+            É o mesmo mecanismo de pilha que uma calculadora HP usa — não
+            precisa de árvore de expressão nem de parser de precedência.
+          </p>
+        </div>
+        <div class="snippet output">
+          <div class="snippet-label">saída esperada · comparação de containers</div>
+          <pre><code>$ ./PmergeMe 9 8 7 2 3 1 5 4 6
+Before: 9 8 7 2 3 1 5 4 6
+After:  1 2 3 4 5 6 7 8 9
+Time to process a range of 9 elements with std::vector : 0.00042 us
+Time to process a range of 9 elements with std::list   : 0.00061 us</code></pre>
+          <p class="snippet-note">
+            O objetivo não é só ordenar corretamente, mas evidenciar o
+            <em>trade-off</em> real entre <code>std::vector</code> (acesso
+            contíguo) e <code>std::list</code> (inserção sem deslocar
+            memória) no mesmo algoritmo.
+          </p>
+        </div>
+      </div>
+
+      <div class="refs">
+        <span class="refs-label">Leitura</span>
+        <a href="https://en.cppreference.com/w/cpp/container/map" target="_blank" rel="noopener">cppreference — std::map</a>
+        <a href="https://en.wikipedia.org/wiki/Merge-insertion_sort" target="_blank" rel="noopener">Wikipedia — Ford-Johnson algorithm</a>
+      </div>
+      <a class="repo-path" href="CPP-09/">📁 CPP-09/</a>
+    </section>
+
+    <footer class="page-foot">
+      Guia complementar ao <a href="README.md">README</a> deste repositório ·
+      C++ tronco comum · 42 São Paulo
+    </footer>
+  </main>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  try {
+    var links = Array.prototype.slice.call(document.querySelectorAll('.toc a[href^="#"]'));
+    var sections = links
+      .map(function (a) { return document.querySelector(a.getAttribute('href')); })
+      .filter(Boolean);
+    if (!('IntersectionObserver' in window) || sections.length === 0) return;
+
+    var byId = {};
+    links.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var link = byId[entry.target.id];
+        if (!link) return;
+        if (entry.isIntersecting) {
+          links.forEach(function (l) { l.classList.remove('active'); });
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+    sections.forEach(function (s) { observer.observe(s); });
+  } catch (e) { /* progressive enhancement only */ }
+})();
+</script>
+</body>
+</html>
